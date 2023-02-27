@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col items-center">
-    <h1 class="text-3xl">Home</h1>
-    <button @click="onClick" class="text-2xl bg-blue-500 py-1 px-3 rounded-xl hover:bg-blue-400 active:bg-blue-500">Test Api</button>
-    <a class="text-2xl">Api result = {{ apiResult }}</a>
+  <div class="flex flex-col h-screen items-center gap-3 bg-background">
+    <h1 class="text-3xl text-primary">Home</h1>
+    <button @click="onClick" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 active:bg-opacity-10">Test Api</button>
+    <a class="text-2xl text-on-background">Api result = {{ apiResult }}</a>
   </div>
 </template>
 
