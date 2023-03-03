@@ -84,27 +84,38 @@
 
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { supabase } from '@/supabase'
 import { useRouter } from 'vue-router'
 import UsernameSetter from '@/components/UsernameSetter.vue'
 import { api } from '@/api'
 
-const username = ref('')
-
-const formRegister = {
-    email: '',
-    password: '',
-    confirmPassword: ''
-}
-
 const router = useRouter()
+const username = ref('')
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 const errorText = ref('')
 
+const formRegister = ref({
+    email: '',
+    password: '',
+    confirmPassword: ''
+})
+
+watch(formRegister, () => {
+    if (errorText.value) {
+        errorText.value = ''
+    }
+}, { deep: true })
+
+watch(username, () => {
+    if (errorText.value) {
+        errorText.value = ''
+    }
+})
+
 async function onRegister() {
-    if (formRegister.password !== formRegister.confirmPassword) {
+    if (formRegister.value.password !== formRegister.value.confirmPassword) {
         errorText.value = "Passwords don't match"
         return
     }
@@ -115,7 +126,7 @@ async function onRegister() {
         return
     }
 
-    const { data, error } = await supabase.auth.signUp(formRegister)
+    const { data, error } = await supabase.auth.signUp(formRegister.value)
     if (error) {
         errorText.value = error.message
         return
