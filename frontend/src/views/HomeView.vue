@@ -6,6 +6,9 @@
     <button @click="onSession" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 actvie:bg-opacity-10">
       Session
     </button>
+    <button @click="onJwtTest" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 actvie:bg-opacity-10">
+      JWT Test
+    </button>
   </div>
 </template>
 
@@ -24,6 +27,11 @@ async function onClick() {
 
 async function onSession() {
   const response = await supabase.auth.getSession()
+  console.log(response)
+}
+
+async function onJwtTest() {
+  const response = await api.get('/user/get-username')
   console.log(response)
 }
 

@@ -1,4 +1,5 @@
 from flask import Blueprint, abort, request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from client import client
 import re
 
@@ -30,5 +31,16 @@ def set_user():
     print(id_user, type(id_user))
     print(username, type(username))
 
-    response = client.table('user_data').insert({'id': id_user, 'username': username, 'username_lower': username.lower()}).execute()
+    response = client.table('user_data').insert({'id_user': id_user, 'username': username, 'username_lower': username.lower()}).execute()
     return {'data': response.data}
+
+@UserBlueprint.route('/get-username', methods=['GET'])
+@jwt_required()
+def get_username():
+    id_user = get_jwt_identity()
+    response = client.table('user_data').select('username').eq('id_user', id_user).execute()
+    if len(response.data):
+        username = response.data[0]['username']
+        return {'username': username}
+    else:
+        return {'username': None}

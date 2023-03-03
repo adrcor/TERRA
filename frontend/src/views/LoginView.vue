@@ -80,6 +80,7 @@ async function onLogin() {
         errorText.value = error.message
         return
     }
+    
     router.push({ name: 'account' })
 }
 
