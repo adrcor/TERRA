@@ -1,11 +1,11 @@
 
-interface AuthState {
+export interface AuthState {
     idUser: string | null,
     username: string | null,
     logedIn: boolean
 }
 
-export default {
+export const authStore = {
     namespaced: true,
     
     state: {

@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
-import store from '@/store'
+import { store, key } from '@/store'
 import {api} from '@/api' 
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
@@ -17,7 +17,7 @@ export const isAuthenticated = async () => {
         return false
 
     } else {
-        if (store.state.auth.userId !== data.session.user.id) {
+        if (store.state.auth.idUser !== data.session.user.id) {
             store.commit('auth/setIdUser', data.session.user.id)
             setUsername()
         }
