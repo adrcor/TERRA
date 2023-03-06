@@ -9,6 +9,9 @@
     <button @click="onJwtTest" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 actvie:bg-opacity-10">
       JWT Test
     </button>
+
+    <AsyncButton :onClick="onFetch" class="text-2xl">Fetch</AsyncButton>
+
   </div>
 </template>
 
@@ -17,6 +20,8 @@
 import { ref, watch } from 'vue'
 import { api } from '@/api'
 import { supabase } from '@/supabase'
+import { sleep } from '@supabase/gotrue-js/dist/module/lib/helpers';
+import AsyncButton from '@/components/AsyncButton.vue'
 
 const apiResult = ref('')
 
@@ -33,6 +38,11 @@ async function onSession() {
 async function onJwtTest() {
   const response = await api.get('/user/get-username')
   console.log(response)
+}
+
+async function onFetch() {
+  const response = await sleep(1000)
+  console.log('DATA')
 }
 
 </script>

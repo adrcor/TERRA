@@ -43,8 +43,8 @@
                 </button>
             </div>
 
-            <button type="submit"
-                class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 text-on-primary">Login</button>
+            <button type="submit" :disabled="disabled"
+                    class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Login</button>
         </form>
 
         <a class="text-error">{{ errorText }}</a>
@@ -73,14 +73,17 @@ watch(formLogin, () => {
 const router = useRouter()
 const showPassword = ref(false)
 const errorText = ref('')
+const disabled = ref(false)
 
 async function onLogin() {
+    disabled.value = true
     const { data, error } = await supabase.auth.signInWithPassword(formLogin.value)
     if (error) {
         errorText.value = error.message
+        disabled.value = false
         return
     }
-    
+    disabled.value = false
     router.push({ name: 'account' })
 }
 

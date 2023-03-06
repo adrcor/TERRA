@@ -71,14 +71,15 @@
                 </button>
             </div>
 
-            <button type="submit"
-                class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 text-on-primary">Register</button>
+            <button type="submit" :disabled="disabled"
+                class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Register</button>
         </form>
 
         <a class="text-error">{{ errorText }}</a>
 
-        <router-link to="login" class="text-primary self-end opacity-60 hover:opacity-100 active:opacity-60">Login
-            now</router-link>
+        <router-link to="login" class="text-primary self-end opacity-60 hover:opacity-100 active:opacity-60">
+            Login now
+        </router-link>
     </div>
 </template>
 
@@ -95,6 +96,7 @@ const username = ref('')
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 const errorText = ref('')
+const disabled = ref(false)
 
 const formRegister = ref({
     email: '',
@@ -115,24 +117,29 @@ watch(username, () => {
 })
 
 async function onRegister() {
+    disabled.value = true
     if (formRegister.value.password !== formRegister.value.confirmPassword) {
         errorText.value = "Passwords don't match"
+        disabled.value = false
         return
     }
 
     const verify = await api.get('/user/verify/' + username.value)
     if (!verify.data.valid) {
         errorText.value = verify.data.message
+        disabled.value = false
         return
     }
 
     const { data, error } = await supabase.auth.signUp(formRegister.value)
     if (error) {
         errorText.value = error.message
+        disabled.value = false
         return
     }
 
     await api.post('/user/set', { username: username.value })
+    disabled.value = false
     router.push({ name: 'account' })
 
 }
