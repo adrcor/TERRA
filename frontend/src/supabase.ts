@@ -21,6 +21,9 @@ export const isAuthenticated = async () => {
             store.commit('auth/setIdUser', data.session.user.id)
             setUsername()
         }
+        if (!store.state.auth.username) {
+            setUsername()
+        }
         return true
     }
 }

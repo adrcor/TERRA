@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-row items-center justify-between h-16 w-full max-w-3xl px-6 py-12">
         <router-link to="/" class="text-primary text-3xl">Home</router-link>
-        <router-link to="account" class="text-on-background text-2xl">{{ store.state.auth.logedIn ? store.state.auth.username : 'Login' }}</router-link>
+        <router-link to="account" class="text-on-background text-2xl">{{ store.state.auth.username ? store.state.auth.username : 'Login' }}</router-link>
     </div>
 </template>
 

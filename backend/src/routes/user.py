@@ -29,8 +29,6 @@ def set_user():
 
     id_user: str = get_jwt_identity()
     username: str = request.json.get('username')
-    print(id_user, type(id_user))
-    print(username, type(username))
 
     response = client.table('user_data').insert({'id_user': id_user, 'username': username, 'username_lower': username.lower()}).execute()
     return {'data': response.data}
