@@ -132,8 +132,7 @@ async function onRegister() {
         return
     }
 
-    const idUser = data?.user?.id
-    await api.post('/user/set', { id: idUser, username: username.value })
+    await api.post('/user/set', { username: username.value })
     router.push({ name: 'account' })
 
 }

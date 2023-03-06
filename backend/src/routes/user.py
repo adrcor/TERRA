@@ -22,11 +22,12 @@ def verify_username(username):
 
 
 @UserBlueprint.route('/set', methods=['POST'])
+@jwt_required()
 def set_user():
     if request.json is None:
         abort(400, 'Unvalid parameters')
 
-    id_user: int = request.json.get('id')
+    id_user: str = get_jwt_identity()
     username: str = request.json.get('username')
     print(id_user, type(id_user))
     print(username, type(username))
@@ -37,7 +38,7 @@ def set_user():
 @UserBlueprint.route('/get-username', methods=['GET'])
 @jwt_required()
 def get_username():
-    id_user = get_jwt_identity()
+    id_user: str = get_jwt_identity()
     response = client.table('user_data').select('username').eq('id_user', id_user).execute()
     if len(response.data):
         username = response.data[0]['username']
