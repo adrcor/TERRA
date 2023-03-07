@@ -1,13 +1,13 @@
 <template>
-  <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4 w-full">
-    <MainTest ref="refMainTest" />
+  <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
+    <MainTest ref="refMainTest" @end-test="onEndTest"/>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { CountryData } from '@/components/main-test/type';
+import type { CountryData, TestData } from '@/components/main-test/type';
 
 const refMainTest = ref<InstanceType<typeof MainTest>>()
 
@@ -42,11 +42,16 @@ async function setData() {
 
 async function onTab() {
   refMainTest.value?.resetTest()
-  refMainTest.value?.launchTest(data)
+  refMainTest.value?.launchTest(data, 5, 'Europe')
 }
 
 async function onEscape() {
   refMainTest.value?.resetTest()
+}
+
+
+function onEndTest(testData: TestData) {
+  console.log("ON END TEST", testData)
 }
 
 </script>

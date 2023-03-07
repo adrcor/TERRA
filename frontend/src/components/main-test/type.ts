@@ -20,3 +20,10 @@ export interface TestData {
     length: number | null,
     region: string | null
 }
+
+export interface InputData {
+        answer: string,
+        valid: boolean,
+        timeReaction: number,
+        timeTotal: number
+}

@@ -1,8 +1,10 @@
 <template>
-  <div class="flex flex-col items-center h-screen bg-background">
-    <NavBar />
-    <RouterView />
-  </div>
+  <div class="flex justify-center min-h-screen bg-background ">
+      <div class="flex flex-col items-center gap-2 min-h-screen w-[1024px]">
+        <NavBar />
+        <RouterView />
+      </div>
+    </div>
 </template>
 
 <script setup lang="ts">
