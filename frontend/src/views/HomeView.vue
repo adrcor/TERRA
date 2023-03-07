@@ -1,48 +1,52 @@
 <template>
-  <div class="flex flex-col items-center gap-3">
-    <h1 class="text-3xl text-primary">Home</h1>
-    <button @click="onClick" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 active:bg-opacity-10">Test Api</button>
-    <a class="text-2xl text-on-background">Api result = {{ apiResult }}</a>
-    <button @click="onSession" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 actvie:bg-opacity-10">
-      Session
-    </button>
-    <button @click="onJwtTest" class="px-3 py-1 rounded-xl text-2xl bg-overlay bg-opacity-10 text-on-background hover:bg-opacity-20 actvie:bg-opacity-10">
-      JWT Test
-    </button>
-
-    <AsyncButton :onClick="onFetch" class="text-2xl">Fetch</AsyncButton>
-
+  <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4 w-full">
+    <MainTest ref="refMainTest" />
   </div>
 </template>
 
-
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { api } from '@/api'
-import { supabase } from '@/supabase'
-import { sleep } from '@supabase/gotrue-js/dist/module/lib/helpers';
-import AsyncButton from '@/components/AsyncButton.vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import MainTest from '@/components/main-test/MainTest.vue'
+import type { CountryData } from '@/components/main-test/type';
 
-const apiResult = ref('')
+const refMainTest = ref<InstanceType<typeof MainTest>>()
 
-async function onClick() {
-  const response = await api.get('/')
-  apiResult.value = response.data
+var data: CountryData[] = []
+
+onMounted(() => {
+  setData()
+  addEventListener('keydown', eventListener)
+})
+
+onUnmounted(() => removeEventListener('keydown', eventListener))
+
+function eventListener(event: KeyboardEvent) {
+  if (event.key == 'Tab') {
+    event.preventDefault()
+    event.stopPropagation()
+    onTab()
+  }
+  if (event.key == 'Escape') {
+    onEscape()
+  }
 }
 
-async function onSession() {
-  const response = await supabase.auth.getSession()
-  console.log(response)
+async function setData() {
+  data = [
+    { country: 'France', capital: 'Paris' },
+    { country: 'Belgium', capital: 'Brussels' },
+    { country: 'Italy', capital: 'Rome' },
+    { country: 'Germany', capital: 'Berlin' },
+  ]
 }
 
-async function onJwtTest() {
-  const response = await api.get('/user/get-username')
-  console.log(response)
+async function onTab() {
+  refMainTest.value?.resetTest()
+  refMainTest.value?.launchTest(data)
 }
 
-async function onFetch() {
-  const response = await sleep(1000)
-  console.log('DATA')
+async function onEscape() {
+  refMainTest.value?.resetTest()
 }
 
 </script>
