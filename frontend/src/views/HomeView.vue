@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
+    <Filters />
     <MainTest ref="refMainTest" @end-test="onEndTest"/>
   </div>
 </template>
@@ -7,7 +8,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { CountryData, TestData } from '@/components/main-test/type';
+import type { CountryData, TestData } from '@/components/main-test/type'
+import Filters from '@/components/main-test/Filters.vue'
 
 const refMainTest = ref<InstanceType<typeof MainTest>>()
 
