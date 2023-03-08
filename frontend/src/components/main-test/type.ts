@@ -1,7 +1,8 @@
 
 export interface CountryData {
     country: string,
-    capital: string
+    capital: string,
+    region: string
 }
 
 export interface Metrics {

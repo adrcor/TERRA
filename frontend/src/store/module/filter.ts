@@ -18,13 +18,5 @@ export const filterStore = {
         set_region(state: FilterState, region: string) {
             state.region = region
         }
-    },
-    getters: {
-        get_length(state: FilterState): number {
-            return state.length
-        },
-        get_region(state: FilterState): string {
-            return state.region
-        }
     }
 }

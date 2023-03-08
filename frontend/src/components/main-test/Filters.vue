@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row gap-3 w-fit items-center">
-        <Dropdown id="region" :default="store.getters['filter/get_region']" :options="regionOptions" @on-update="onUpdateRegion">
+        <Dropdown :default="store.state.filter.region" :options="regionOptions" @on-update="onUpdateRegion">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -8,7 +8,7 @@
             </svg>
         </Dropdown>
 
-        <Dropdown id="length" :default="store.getters['filter/get_length'].toString()" :options="lengthOptions" @on-update="onUpdateLength">
+        <Dropdown :default="store.state.filter.length.toString()" :options="lengthOptions" @on-update="onUpdateLength">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"

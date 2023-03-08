@@ -7,10 +7,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useStore } from '@/store'
 import MainTest from '@/components/main-test/MainTest.vue'
 import type { CountryData, TestData } from '@/components/main-test/type'
 import Filters from '@/components/main-test/Filters.vue'
 
+const store = useStore()
 const refMainTest = ref<InstanceType<typeof MainTest>>()
 
 var data: CountryData[] = []
@@ -35,16 +37,20 @@ function eventListener(event: KeyboardEvent) {
 
 async function setData() {
   data = [
-    { country: 'France', capital: 'Paris' },
-    { country: 'Belgium', capital: 'Brussels' },
-    { country: 'Italy', capital: 'Rome' },
-    { country: 'Germany', capital: 'Berlin' },
+    { country: 'France', capital: 'Paris', region: 'EU' },
+    { country: 'Belgium', capital: 'Brussels', region: 'EU' },
+    { country: 'Italy', capital: 'Rome', region: 'AS' },
+    { country: 'Germany', capital: 'Berlin', region: 'AS' },
   ]
 }
 
 async function onTab() {
   refMainTest.value?.resetTest()
-  refMainTest.value?.launchTest(data, 5, 'Europe')
+  refMainTest.value?.launchTest(
+    data.filter((country) => country.region == store.state.filter.region),
+    store.state.filter.length,
+    store.state.filter.region
+  )
 }
 
 async function onEscape() {
