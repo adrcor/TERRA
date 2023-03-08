@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row gap-3 w-fit items-center">
-        <Dropdown id="region" :default="regionOptions[0]" :options="regionOptions" @on-update="onUpdateRegion">
+        <Dropdown id="region" :default="store.getters['filter/get_region']" :options="regionOptions" @on-update="onUpdateRegion">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -8,7 +8,7 @@
             </svg>
         </Dropdown>
 
-        <Dropdown id="length" :default="lengthOptions[0]" :options="lengthOptions" @on-update="onUpdateLength">
+        <Dropdown id="length" :default="store.getters['filter/get_length'].toString()" :options="lengthOptions" @on-update="onUpdateLength">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -20,16 +20,19 @@
 
 <script setup lang="ts">
 import Dropdown from '@/components/widgets/Dropdown.vue'
+import { useStore } from '@/store'
+
+const store = useStore()
 
 const lengthOptions = ['10', '25', '50']
 const regionOptions = ['World', 'AF', 'AS', 'EU', 'NA', 'OC', 'SA']
 
 
 function onUpdateRegion(value: string) {
-    console.log('REGION', value)
+    store.commit('filter/set_region', value)
 }
 
 function onUpdateLength(value: string) {
-    console.log('LENGTH', value)
+    store.commit('filter/set_length', value)
 }
 </script>
