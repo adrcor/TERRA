@@ -25,7 +25,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 const props = defineProps<{
     default: string,
     options: string[]
-    alias?: { [key: string]: string }
 }>()
 
 const open = ref<boolean>(false)
@@ -52,11 +51,7 @@ function checkClickOutside(event: MouseEvent) {
 
 function onSelect(element: string) {
     open.value = false
-    if (props.alias && element in props.alias) {
-        selected.value = props.alias[element]
-    } else {
-        selected.value = element
-    }
+    selected.value = element
     emits('on-update', selected.value)
 }
 

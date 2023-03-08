@@ -1,7 +1,6 @@
 <template>
     <div class="flex flex-row gap-3 w-fit items-center">
-        <Dropdown id="region" :default="regionOptions[0]" :options="regionOptions" :alias="regionAlias"
-            @on-update="onUpdateRegion">
+        <Dropdown id="region" :default="regionOptions[0]" :options="regionOptions" @on-update="onUpdateRegion">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -23,16 +22,8 @@
 import Dropdown from '@/components/widgets/Dropdown.vue'
 
 const lengthOptions = ['10', '25', '50']
-const regionOptions = ['World', 'Africa', 'Asia', 'Europe', 'North America', 'Oceania', 'South America']
-const regionAlias = {
-    'World': 'World',
-    'Africa': 'AF',
-    'Asia': 'AS',
-    'Europe': 'EU',
-    'North America': 'NA',
-    'Oceania': 'OC',
-    'South America': 'SA'
-}
+const regionOptions = ['World', 'AF', 'AS', 'EU', 'NA', 'OC', 'SA']
+
 
 function onUpdateRegion(value: string) {
     console.log('REGION', value)
