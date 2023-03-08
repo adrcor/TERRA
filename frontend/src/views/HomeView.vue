@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from '@/store'
+import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
 import type { CountryData, TestData } from '@/components/main-test/type'
 import Filters from '@/components/main-test/Filters.vue'
@@ -36,18 +37,24 @@ function eventListener(event: KeyboardEvent) {
 }
 
 async function setData() {
-  data = [
-    { country: 'France', capital: 'Paris', region: 'EU' },
-    { country: 'Belgium', capital: 'Brussels', region: 'EU' },
-    { country: 'Italy', capital: 'Rome', region: 'AS' },
-    { country: 'Germany', capital: 'Berlin', region: 'AS' },
-  ]
+  const response = await api.get('/geo/all')
+  console.log(response)
+  data = response.data
 }
 
 async function onTab() {
+  if (data.length == 0) {
+    for (const _ of Array(100).keys()) {
+      await new Promise(r => setTimeout(r, 10))
+      console.log(data)
+      if (data.length) {
+        break
+      }
+    }
+  }
   refMainTest.value?.resetTest()
   refMainTest.value?.launchTest(
-    data.filter((country) => country.region == store.state.filter.region),
+    data.filter((country) => country.region == store.state.filter.region || store.state.filter.region == 'World'),
     store.state.filter.length,
     store.state.filter.region
   )

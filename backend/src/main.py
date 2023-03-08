@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 
 from routes.user import UserBlueprint
+from routes.geo import GeoBlueprint
 
 load_dotenv('.env')
 
@@ -21,6 +22,7 @@ def home():
     return 'Api is running'
 
 app.register_blueprint(UserBlueprint, url_prefix='/user')
+app.register_blueprint(GeoBlueprint, url_prefix='/geo')
 
 if __name__ == '__main__':
     app.run(port=5000)
