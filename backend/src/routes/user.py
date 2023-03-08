@@ -2,20 +2,20 @@ from flask import Blueprint, abort, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from client import client
 import re
+from model import User
 
 UserBlueprint = Blueprint('UserBlueprint', __name__)
 
 @UserBlueprint.route('/verify/<username>', methods=['GET'])
 def verify_username(username):
 
-    if len(username) < 4 or len(username) > 16:
+    if not User.verify_length(username):
         return {'valid': False, 'message': 'Username must be between 4 and 16 characters'}
     
-    if not bool(re.fullmatch(r'^[a-zA-Z0-9_-]+$', username)):
+    if not User.verify_chars(username):
         return {'valid': False, 'message': "Username can only contains letters, digits, '_' and '-'"}
     
-    response = client.table('user_data').select('*').eq('username_lower', username.lower()).execute()
-    if len(response.data):
+    if not User.verify_available(username):
         return {'valid': False, 'message': 'Username is already taken'}
     
     return {'valid': True, 'message': 'Username is valid'}
@@ -30,16 +30,14 @@ def set_user():
     id_user: str = get_jwt_identity()
     username: str = request.json.get('username')
 
-    response = client.table('user_data').insert({'id_user': id_user, 'username': username, 'username_lower': username.lower()}).execute()
-    return {'data': response.data}
+    user = User.new(id_user, username)
+    new_user = user.add()
+
+    return {'new_user': new_user.as_dict() if new_user else None}
 
 @UserBlueprint.route('/get-username', methods=['GET'])
 @jwt_required()
 def get_username():
     id_user: str = get_jwt_identity()
-    response = client.table('user_data').select('username').eq('id_user', id_user).execute()
-    if len(response.data):
-        username = response.data[0]['username']
-        return {'username': username}
-    else:
-        return {'username': None}
+    user = User.get(id_user)
+    return {'username': user.username if user else None}
