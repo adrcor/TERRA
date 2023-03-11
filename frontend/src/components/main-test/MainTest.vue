@@ -29,11 +29,11 @@ var error: number = 0
 const query = ref<string>('Press Tab to start a test')
 
 const testData: TestData = {
-    time: null,
-    score: null,
-    speed: null,
-    length: null,
-    region: null
+    time: 0,
+    score: 0,
+    speed: 0,
+    length: 0,
+    region: ''
 }
 
 const metrics = ref<Metrics>({

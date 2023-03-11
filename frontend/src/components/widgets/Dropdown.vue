@@ -23,8 +23,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 
 const props = defineProps<{
-    default: string,
-    options: string[]
+    default: string,options: string[]
 }>()
 
 const open = ref<boolean>(false)

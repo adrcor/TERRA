@@ -1,7 +1,10 @@
 <template>
-  <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
+  <div v-if="!store.state.global.endTestScreen" class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
     <Filters />
     <MainTest ref="refMainTest" @end-test="onEndTest"/>
+  </div>
+  <div v-if="store.state.global.endTestScreen">
+    <TestReview :data="reviewData"/>
   </div>
 </template>
 
@@ -12,15 +15,25 @@ import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
 import type { CountryData, TestData } from '@/components/main-test/type'
 import Filters from '@/components/main-test/Filters.vue'
+import TestReview from '@/components/test-review/TestReview.vue'
 
 const store = useStore()
 const refMainTest = ref<InstanceType<typeof MainTest>>()
+
+const reviewData = ref<TestData>({
+  time: 0,
+  score: 0,
+  speed: 0,
+  length: 1,
+  region: ''
+})
 
 var data: CountryData[] = []
 
 onMounted(() => {
   setData()
   addEventListener('keydown', eventListener)
+  store.commit('global/setEndTestScreen', false)
 })
 
 onUnmounted(() => removeEventListener('keydown', eventListener))
@@ -43,7 +56,10 @@ async function setData() {
 }
 
 async function onTab() {
-  if (data.length == 0) {
+  store.commit("global/setEndTestScreen", false)
+
+  // wait until data and mainTest are loaded
+  if (data.length == 0 || refMainTest.value == null) {
     for (const _ of Array(100).keys()) {
       await new Promise(r => setTimeout(r, 10))
       console.log(data)
@@ -52,6 +68,7 @@ async function onTab() {
       }
     }
   }
+
   refMainTest.value?.resetTest()
   refMainTest.value?.launchTest(
     data.filter((country) => country.region == store.state.filter.region || store.state.filter.region == 'World'),
@@ -61,11 +78,24 @@ async function onTab() {
 }
 
 async function onEscape() {
+  // wait until mainTest is loaded 
+  if (refMainTest.value == null) {
+    for (const _ of Array(100).keys()) {
+      await new Promise(r => setTimeout(r, 10))
+      console.log(data)
+      if (data.length) {
+        break
+      }
+    }
+  }
+  store.commit("global/setEndTestScreen", false)
   refMainTest.value?.resetTest()
 }
 
 
 function onEndTest(testData: TestData) {
+  reviewData.value = testData
+  store.commit("global/setEndTestScreen", true)
   console.log("ON END TEST", testData)
 }
 

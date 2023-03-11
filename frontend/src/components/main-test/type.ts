@@ -15,16 +15,16 @@ export interface Metrics {
 }
 
 export interface TestData {
-    time: number | null,
-    score: number | null,
-    speed: number | null,
-    length: number | null,
-    region: string | null
+    time: number,
+    score: number,
+    speed: number,
+    length: number,
+    region: string
 }
 
 export interface InputData {
-        answer: string,
-        valid: boolean,
-        timeReaction: number,
-        timeTotal: number
+    answer: string,
+    valid: boolean,
+    timeReaction: number,
+    timeTotal: number
 }

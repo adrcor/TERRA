@@ -24,7 +24,7 @@ import { useStore } from '@/store'
 
 const store = useStore()
 
-const lengthOptions = ['10', '25', '50']
+const lengthOptions = ['5', '10', '25', '50']
 const regionOptions = ['World', 'AF', 'AS', 'EU', 'NA', 'OC', 'SA']
 
 
