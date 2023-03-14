@@ -1,6 +1,5 @@
-
 <template>
-    <div class="flex flex-col gap-4 items-center">
+    <div class="flex flex-col gap-4 items-center transition-opacity duration-75" :class="easeIn ? 'opacity-100': 'opacity-0'">
         <MetricsDisplay :metrics="metrics"/>
         <h1 class="text-2xl text-on-background">{{ query }}</h1>
         <UserInput ref="refUserInput" @answer="onAnswer" />
@@ -25,6 +24,9 @@ var startTime: number = -1
 var histo: InputData[] = []
 var score: number = 0
 var error: number = 0
+
+const easeIn = ref<boolean>(false)
+setTimeout(() => easeIn.value = true, 10)
 
 const query = ref<string>('Press Tab to start a test')
 
@@ -131,9 +133,9 @@ function launchTest(data: CountryData[], length: number, region: string): void {
     testData.length = length
     metrics.value.length = length
 
+    query.value = '3'
     setQueryList()
 
-    query.value = '3'
     setTimeout(() => query.value = '2', 500)
     setTimeout(() => query.value = '1', 1000)
     setTimeout(startTest, 1500)
@@ -170,7 +172,6 @@ function resetTest(): void {
 
 function endTest() {
     emitData()
-    query.value = 'Press Tab to start a test'
     refUserInput.value?.setExpected('')
     testRunning = false
 
@@ -182,7 +183,7 @@ function emitData() {
     testData.score = score
     testData.length = histo.length
     testData.speed = Math.floor(score / testData.time * 60000000)
-    emits('end-test', testData)
+    emits('end-test', testData, histo)
 }
 
 function onAnswer(inputData: InputData) {

@@ -3,8 +3,8 @@
     <Filters />
     <MainTest ref="refMainTest" @end-test="onEndTest"/>
   </div>
-  <div v-if="store.state.global.endTestScreen">
-    <TestReview :data="reviewData"/>
+  <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-16">
+    <TestReview :data="reviewData" :histo="reviewHisto"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from '@/store'
 import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { CountryData, TestData } from '@/components/main-test/type'
+import type { InputData, CountryData, TestData } from '@/components/main-test/type'
 import Filters from '@/components/main-test/Filters.vue'
 import TestReview from '@/components/test-review/TestReview.vue'
 
@@ -27,6 +27,8 @@ const reviewData = ref<TestData>({
   length: 1,
   region: ''
 })
+
+const reviewHisto = ref<InputData[]>([])
 
 var data: CountryData[] = []
 
@@ -51,7 +53,6 @@ function eventListener(event: KeyboardEvent) {
 
 async function setData() {
   const response = await api.get('/geo/all')
-  console.log(response)
   data = response.data
 }
 
@@ -62,7 +63,6 @@ async function onTab() {
   if (data.length == 0 || refMainTest.value == null) {
     for (const _ of Array(100).keys()) {
       await new Promise(r => setTimeout(r, 10))
-      console.log(data)
       if (data.length) {
         break
       }
@@ -82,7 +82,6 @@ async function onEscape() {
   if (refMainTest.value == null) {
     for (const _ of Array(100).keys()) {
       await new Promise(r => setTimeout(r, 10))
-      console.log(data)
       if (data.length) {
         break
       }
@@ -93,10 +92,10 @@ async function onEscape() {
 }
 
 
-function onEndTest(testData: TestData) {
+function onEndTest(testData: TestData, histo: InputData[]) {
   reviewData.value = testData
+  reviewHisto.value = histo
   store.commit("global/setEndTestScreen", true)
-  console.log("ON END TEST", testData)
 }
 
 </script>
