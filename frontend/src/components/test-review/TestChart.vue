@@ -5,42 +5,41 @@
 <script setup lang="ts">
 import { ref, toRaw, onMounted } from 'vue'
 import { Bar } from 'vue-chartjs'
+import type {ChartOptions, ChartData} from 'chart.js'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import type { InputData } from '../main-test/type';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
-const chartData = ref({
+const chartData = ref<ChartData<'bar'>>({
     datasets: []
 })
 
-const chartOptions: any = {
+const chartOptions: ChartOptions<'bar'> = {
     responsive: true,
     scales: {
         x: {
             stacked: true,
             display: false,
-            grid: {
-                border: {
-                    display: false
-                }
-            }
         },
         y: {
             stacked: true,
             ticks: {
-                callback: function (val: number, index: number) {
-                    return val % 1000 === 0 ? val : ''
+                callback: function(val: string | number, _index: number): string | number {
+                    if (typeof(val) == "number") {
+                        return val % 1000 === 0 ? val : ''
+                    } else {
+                        return ''
+                    }
                 }
             },
             border: {
                 display: false
             },
             grid: {
-                border: {
-                    display: false
-                },
-                color: function (context: any) {
+                color: function(context) {
+                    console.log(context)
+                    console.log(typeof(context))
                     if (context.tick.value % 1000 === 0) {
                         return '#444444'
                     } else {
@@ -60,10 +59,10 @@ const chartOptions: any = {
             titleColor: '#6eb1e1',
 
             callbacks: {
-                title: function (context: any) {
+                title: function(context) {
 
                 },
-                label: function (context: any) {
+                label: function (context) {
                     const index = context.dataIndex
                     if (props.histo[index].valid) {
                         const reaction = (props.histo[index].timeReaction / 1000).toFixed(3)
@@ -76,11 +75,13 @@ const chartOptions: any = {
                         return ['Help']
                     }
                 },
-                footer: function (items: Array<any>) {
+                footer: function (items) {
                     var total = 0;
-                    for (var i = 0; i < chartData.value['datasets'].length; i++) {
-                        // @ts-ignore
-                        total += chartData.value['datasets'][i].data[items[0].dataIndex]
+                    for (var i = 0; i < chartData.value.datasets.length; i++) {
+                        const temp = chartData.value.datasets[i].data[items[0].dataIndex]
+                        if (typeof(temp) == 'number') {
+                            total += temp
+                        }
                     }
 
                     return 'Total: ' + (total / 1000).toFixed(3) + 's'
@@ -99,21 +100,21 @@ const props = defineProps<{
 
 onMounted(() => updateChart())
 
-function getChartData(labels: string[], reactionTime: number[], typingTime: number[], error: number[]) {
+function getChartData(labels: string[], reactionTime: number[], typingTime: number[], error: number[]): ChartData<'bar'> {
     return {
         labels: labels,
         datasets: [{
-            label: ['Reaction Time'],
+            label: 'Reaction Time',
             backgroundColor: '#6ee18e',
             data: reactionTime
         },
         {
-            label: ['Typing Time'],
+            label: 'Typing Time',
             backgroundColor: '#6eb1e1',
             data: typingTime
         },
         {
-            label: ['Error'],
+            label: 'Error',
             backgroundColor: '#cf6679',
             data: error
         }]
@@ -122,11 +123,10 @@ function getChartData(labels: string[], reactionTime: number[], typingTime: numb
 
 function updateChart() {
     const histo = toRaw(props.histo)
-    const labels = histo.map((item: any) => item.answer)
+    const labels = histo.map((item) => item.answer)
     const reactionTime = histo.map(item => { if (item.valid) { return item.timeReaction } else { return 0 } })
     const typingTime = histo.map(item => { if (item.valid) { return item.timeTotal - item.timeReaction } else { return 0 } })
     const error = histo.map(item => { if (!item.valid) { return item.timeTotal } else { return 0 } })
-    // @ts-ignore
     chartData.value = getChartData(labels, reactionTime, typingTime, error)
 }
 
