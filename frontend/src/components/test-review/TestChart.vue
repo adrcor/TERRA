@@ -14,7 +14,7 @@ const chartData = ref({
     datasets: []
 })
 
-const chartOptions = {
+const chartOptions: any = {
     responsive: true,
     scales: {
         x: {
@@ -79,7 +79,8 @@ const chartOptions = {
                 footer: function (items: Array<any>) {
                     var total = 0;
                     for (var i = 0; i < chartData.value['datasets'].length; i++) {
-                        total += chartData.value['datasets'][i].data[items[0].dataIndex];
+                        // @ts-ignore
+                        total += chartData.value['datasets'][i].data[items[0].dataIndex]
                     }
 
                     return 'Total: ' + (total / 1000).toFixed(3) + 's'
@@ -125,6 +126,7 @@ function updateChart() {
     const reactionTime = histo.map(item => { if (item.valid) { return item.timeReaction } else { return 0 } })
     const typingTime = histo.map(item => { if (item.valid) { return item.timeTotal - item.timeReaction } else { return 0 } })
     const error = histo.map(item => { if (!item.valid) { return item.timeTotal } else { return 0 } })
+    // @ts-ignore
     chartData.value = getChartData(labels, reactionTime, typingTime, error)
 }
 
