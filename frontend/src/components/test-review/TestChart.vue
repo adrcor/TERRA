@@ -38,8 +38,6 @@ const chartOptions: ChartOptions<'bar'> = {
             },
             grid: {
                 color: function(context) {
-                    console.log(context)
-                    console.log(typeof(context))
                     if (context.tick.value % 1000 === 0) {
                         return '#444444'
                     } else {
@@ -59,7 +57,7 @@ const chartOptions: ChartOptions<'bar'> = {
             titleColor: '#6eb1e1',
 
             callbacks: {
-                title: function(context) {
+                title: function(_context) {
 
                 },
                 label: function (context) {
