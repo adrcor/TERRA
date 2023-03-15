@@ -16,6 +16,7 @@ import MainTest from '@/components/main-test/MainTest.vue'
 import type { InputData, CountryData, TestData } from '@/components/main-test/type'
 import Filters from '@/components/main-test/Filters.vue'
 import TestReview from '@/components/test-review/TestReview.vue'
+import { isAuthenticated } from '@/supabase'
 
 const store = useStore()
 const refMainTest = ref<InstanceType<typeof MainTest>>()
@@ -96,6 +97,18 @@ function onEndTest(testData: TestData, histo: InputData[]) {
   reviewData.value = testData
   reviewHisto.value = histo
   store.commit("global/setEndTestScreen", true)
+  afterEndTest(testData)
+}
+
+async function afterEndTest(testData: TestData) {
+  if (await isAuthenticated()) {
+    await logTest(testData)
+  }
+}
+
+async function logTest(testData: TestData) {
+  const response = await api.post('/test/add', testData)
+  console.log(response)
 }
 
 </script>
