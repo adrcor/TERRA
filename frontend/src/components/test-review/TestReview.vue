@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TestData, Highscore } from '../main-test/type'
+import type { TestData, TestResult } from '@/models'
 import type { InputData } from '@/models';
 import ScoreBar from './ScoreBar.vue';
 import TestChart from './TestChart.vue';
@@ -14,7 +14,7 @@ import TestChart from './TestChart.vue';
 const props = defineProps<{
     data: TestData,
     histo: InputData[],
-    highscore: Highscore
+    highscore: TestResult
 }>()
 
 </script>

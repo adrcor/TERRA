@@ -1,10 +1,10 @@
 <template>
   <div v-if="!store.state.global.endTestScreen" class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
     <Filters />
-    <MainTest ref="refMainTest" @end-test="onEndTest"/>
+    <MainTest ref="refMainTest" @end-test="onEndTest" />
   </div>
   <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-16">
-    <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore"/>
+    <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore" />
   </div>
 </template>
 
@@ -13,8 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from '@/store'
 import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { TestData, Highscore } from '@/components/main-test/type'
-import type { CountryData, InputData } from '@/models'
+import type { CountryData, InputData, TestResult, Highscore, TestParam, TestData } from '@/models'
 import Filters from '@/components/main-test/Filters.vue'
 import TestReview from '@/components/test-review/TestReview.vue'
 import { isAuthenticated } from '@/supabase'
@@ -23,14 +22,18 @@ const store = useStore()
 const refMainTest = ref<InstanceType<typeof MainTest>>()
 
 const reviewData = ref<TestData>({
-  time: 0,
-  score: 0,
-  speed: 0,
-  length: 1,
-  region: ''
+  result: {
+    time: 0,
+    score: 0,
+    speed: 0
+  },
+  param: {
+    region: '',
+    length: 0
+  }
 })
 
-const reviewHighscore = ref<Highscore>({
+const reviewHighscore = ref<TestResult>({
   time: 0,
   score: 0,
   speed: 0
@@ -76,12 +79,11 @@ async function onTab() {
       }
     }
   }
-
+  const testParam = { region: store.state.filter.region, length: store.state.filter.length } 
   refMainTest.value?.resetTest()
   refMainTest.value?.launchTest(
     data.filter((country) => country.region == store.state.filter.region || store.state.filter.region == 'World'),
-    store.state.filter.length,
-    store.state.filter.region
+    testParam
   )
 }
 
@@ -115,7 +117,7 @@ async function afterEndTest(testData: TestData) {
 }
 
 async function getHighscore(testData: TestData) {
-  const response = await api.get(`/highscore/get/${testData.region}/${testData.length}`)
+  const response = await api.get(`/highscore/get/${testData.param?.region}/${testData.param?.length}`)
   console.log(response)
   if (response.data == 'No highscore') {
     console.log('NO HIGHSCORE')

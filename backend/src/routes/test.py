@@ -13,7 +13,7 @@ def add_test():
     id_user = get_jwt_identity()
     data = request.json
     print(data)
-    test: Test = Test.new(id_user, **data).add() # type: ignore
+    test: Test = Test.new(id_user, **data['result'], **data['param']).add() # type: ignore
     if test.is_new_highscore():
         Highscore.add(test)
     return test.as_dict()

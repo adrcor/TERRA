@@ -1,7 +1,7 @@
+import type { TestParam } from "./test-param";
+import type { TestResult } from "./test-result";
+
 export interface TestData {
-    time: number,
-    score: number,
-    speed: number,
-    length: number,
-    region: string
+    param: TestParam,
+    result: TestResult
 }

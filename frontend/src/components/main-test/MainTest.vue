@@ -1,6 +1,7 @@
 <template>
-    <div class="flex flex-col gap-4 items-center transition-opacity duration-75" :class="easeIn ? 'opacity-100': 'opacity-0'">
-        <MetricsDisplay :metrics="metrics"/>
+    <div class="flex flex-col gap-4 items-center transition-opacity duration-75"
+        :class="easeIn ? 'opacity-100' : 'opacity-0'">
+        <MetricsDisplay :metrics="metrics" />
         <h1 class="text-2xl text-on-background">{{ query }}</h1>
         <UserInput ref="refUserInput" @answer="onAnswer" />
     </div>
@@ -9,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from './UserInput.vue'
-import type { CountryData, LiveMetrics, InputData, TestData } from '@/models';
+import type { CountryData, LiveMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
@@ -31,11 +32,15 @@ setTimeout(() => easeIn.value = true, 10)
 const query = ref<string>('Press Tab to start a test')
 
 const testData: TestData = {
-    time: 0,
-    score: 0,
-    speed: 0,
-    length: 0,
-    region: ''
+    result: {
+        time: 0,
+        score: 0,
+        speed: 0
+    },
+    param: {
+        region: '',
+        length: 0
+    }
 }
 
 const metrics = ref<LiveMetrics>({
@@ -115,16 +120,15 @@ function updateMetrics() {
     }
 }
 
-function launchTest(data: CountryData[], length: number, region: string): void {
+function launchTest(data: CountryData[], testParam: TestParam): void {
     if (launchRunning) {
         return
     }
     launchRunning = true
 
     queryData = data
-    testData.region = region
-    testData.length = length
-    metrics.value.length = length
+    testData.param = testParam
+    metrics.value.length = testParam.length
 
     query.value = '3'
     setQueryList()
@@ -170,11 +174,14 @@ function endTest() {
 }
 
 function emitData() {
-    const currentTime = new Date().getTime()
-    testData.time = currentTime - startTime
-    testData.score = score
-    testData.length = histo.length
-    testData.speed = Math.floor(score / testData.time * 60000000)
+    const testTime = new Date().getTime() - startTime
+
+    const testResult: TestResult = {
+        time: testTime,
+        score: score,
+        speed: Math.floor(score / testTime * 60000000)
+    }
+    testData.result = testResult
     emits('end-test', testData, histo)
 }
 
