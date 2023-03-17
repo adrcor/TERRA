@@ -28,3 +28,9 @@ export interface InputData {
     timeReaction: number,
     timeTotal: number
 }
+
+export interface Highscore {
+    time: number,
+    score: number,
+    speed: number
+}

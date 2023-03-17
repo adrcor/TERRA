@@ -7,6 +7,7 @@ import os
 from routes.user import UserBlueprint
 from routes.geo import GeoBlueprint
 from routes.test import TestBlueprint
+from routes.highscore import HighscoreBlueprint
 
 load_dotenv('.env')
 
@@ -25,6 +26,8 @@ def home():
 app.register_blueprint(UserBlueprint, url_prefix='/user')
 app.register_blueprint(GeoBlueprint, url_prefix='/geo')
 app.register_blueprint(TestBlueprint, url_prefix='/test')
+app.register_blueprint(HighscoreBlueprint, url_prefix='/highscore')
+
 
 if __name__ == '__main__':
     app.run(port=5000)

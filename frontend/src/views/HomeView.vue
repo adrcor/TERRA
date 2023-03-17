@@ -4,7 +4,7 @@
     <MainTest ref="refMainTest" @end-test="onEndTest"/>
   </div>
   <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-16">
-    <TestReview :data="reviewData" :histo="reviewHisto"/>
+    <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from '@/store'
 import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { InputData, CountryData, TestData } from '@/components/main-test/type'
+import type { InputData, CountryData, TestData, Highscore } from '@/components/main-test/type'
 import Filters from '@/components/main-test/Filters.vue'
 import TestReview from '@/components/test-review/TestReview.vue'
 import { isAuthenticated } from '@/supabase'
@@ -27,6 +27,12 @@ const reviewData = ref<TestData>({
   speed: 0,
   length: 1,
   region: ''
+})
+
+const reviewHighscore = ref<Highscore>({
+  time: 0,
+  score: 0,
+  speed: 0
 })
 
 const reviewHisto = ref<InputData[]>([])
@@ -102,9 +108,21 @@ function onEndTest(testData: TestData, histo: InputData[]) {
 
 async function afterEndTest(testData: TestData) {
   if (await isAuthenticated()) {
+    await getHighscore(testData)
     await logTest(testData)
   }
 }
+
+async function getHighscore(testData: TestData) {
+  const response = await api.get(`/highscore/get/${testData.region}/${testData.length}`)
+  console.log(response)
+  if (response.data == 'No highscore') {
+    console.log('NO HIGHSCORE')
+  } else {
+    reviewHighscore.value = {time: response.data.time, score: response.data.score, speed: response.data.speed}
+  }
+
+} 
 
 async function logTest(testData: TestData) {
   const response = await api.post('/test/add', testData)
