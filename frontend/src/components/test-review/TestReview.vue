@@ -6,7 +6,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TestData, InputData, Highscore } from '../main-test/type';
+import type { TestData, Highscore } from '../main-test/type'
+import type { InputData } from '@/models';
 import ScoreBar from './ScoreBar.vue';
 import TestChart from './TestChart.vue';
 

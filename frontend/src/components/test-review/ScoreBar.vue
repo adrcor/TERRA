@@ -26,7 +26,6 @@
             </div>
         </div>
     </div>
-    <button @click="onClick">test</button>
 </template>
 
 <script setup lang="ts">
@@ -45,9 +44,5 @@ const diffTime = computed(() => props.score.time - props.highscore.time)
 const diffSpeed = computed(() => props.score.speed - props.highscore.speed)
 
 const newHighscore = computed(() => props.score.speed > props.highscore.speed)
-
-function onClick () {
-    console.log(props.score)
-}
 
 </script>
