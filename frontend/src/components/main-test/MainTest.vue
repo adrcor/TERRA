@@ -9,7 +9,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from './UserInput.vue'
-import type { CountryData, Metrics, TestData, InputData } from './type'
+import type { CountryData, TestData, InputData } from './type'
+import type { LiveMetrics } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
@@ -38,10 +39,9 @@ const testData: TestData = {
     region: ''
 }
 
-const metrics = ref<Metrics>({
+const metrics = ref<LiveMetrics>({
     time: 0,
-    score: 0,
-    error: 0,
+    answer: 0,
     length: 0,
     accuracy: 0,
     speed: 0
@@ -103,14 +103,8 @@ function updateMetrics() {
     const currTime = new Date().getTime()
     const spentTime = currTime - startTime
 
-    // Only update accuracy after the first answer to avoid zero div error
-    if (metrics.value.score || metrics.value.error) {
-        metrics.value.accuracy = metrics.value.score / (metrics.value.score + metrics.value.error)
-    }
-
-    if (score != metrics.value.score || error != metrics.value.error) {
-        metrics.value.score = score
-        metrics.value.error = error
+    if (score + error != metrics.value.answer) {
+        metrics.value.answer = score + error
         metrics.value.accuracy = score / (score + error)
         metrics.value.speed = score / spentTime * 60000000
     }
@@ -157,10 +151,9 @@ function resetTest(): void {
     testRunning = false
 
     metrics.value.time = 0
-    metrics.value.score = 0
+    metrics.value.answer = 0
     metrics.value.accuracy = 0
     metrics.value.speed = 0
-    metrics.value.error = 0
 
     histo = []
     score = 0

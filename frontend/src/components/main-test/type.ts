@@ -5,15 +5,6 @@ export interface CountryData {
     region: string
 }
 
-export interface Metrics {
-    time: number,
-    score: number,
-    error: number,
-    length: number,
-    accuracy: number,
-    speed: number
-}
-
 export interface TestData {
     time: number,
     score: number,
