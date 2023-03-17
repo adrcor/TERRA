@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
-import type { Highscore, TestData } from '../main-test/type';
+import { computed } from 'vue'
+import type { Highscore, TestData } from '@/models';
 
 
 const props = defineProps<{

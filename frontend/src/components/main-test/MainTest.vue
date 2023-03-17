@@ -9,8 +9,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from './UserInput.vue'
-import type { TestData } from './type'
-import type { CountryData, LiveMetrics, InputData } from '@/models';
+import type { CountryData, LiveMetrics, InputData, TestData } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()

@@ -1,3 +1,5 @@
 export * from './live-metrics'
 export * from './country-data'
 export * from './input-data'
+export * from './test-data'
+export * from './highscore'
