@@ -4,6 +4,7 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AccountView from '@/views/AccountView.vue'
 import { isAuthenticated } from '@/supabase'
+import { store } from '@/store'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
