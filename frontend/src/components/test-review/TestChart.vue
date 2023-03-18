@@ -7,7 +7,7 @@ import { ref, toRaw, onMounted } from 'vue'
 import { Bar } from 'vue-chartjs'
 import type {ChartOptions, ChartData} from 'chart.js'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
-import type { InputData } from '../main-test/type';
+import type { InputData } from '@/models'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 

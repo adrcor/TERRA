@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import type { InputData } from './type';
+import type { InputData } from '@/models'
 
 const refInput = ref<HTMLInputElement>()
 const valueInput = ref<string>('')
