@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center w-96 gap-4">
-        <ScoreBar :score="props.data" :highscore="props.highscore" :newHighscore="true"/>
+        <ScoreBar :score="props.data" :highscore="props.highscore" :state="props.stateHigscore"/>
         <TestChart :histo="props.histo"/>
     </div>
 </template>
@@ -14,7 +14,8 @@ import TestChart from './TestChart.vue';
 const props = defineProps<{
     data: TestData,
     histo: InputData[],
-    highscore: TestResult
+    highscore: TestResult,
+    stateHigscore: 'loading' | 'normal' | 'new'
 }>()
 
 </script>

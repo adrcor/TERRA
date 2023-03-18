@@ -4,7 +4,7 @@
     <MainTest ref="refMainTest" @end-test="onEndTest" />
   </div>
   <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-16">
-    <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore" />
+    <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore" :state-higscore="reviewStateHighscore"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from '@/store'
 import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { CountryData, InputData, TestResult, Highscore, TestParam, TestData } from '@/models'
+import type { CountryData, InputData, TestResult, TestParam, TestData } from '@/models'
 import Filters from '@/components/main-test/Filters.vue'
 import TestReview from '@/components/test-review/TestReview.vue'
 import { isAuthenticated } from '@/supabase'
@@ -38,6 +38,8 @@ const reviewHighscore = ref<TestResult>({
   score: 0,
   speed: 0
 })
+
+const reviewStateHighscore = ref<'loading' | 'normal' | 'new'>('loading')
 
 const reviewHisto = ref<InputData[]>([])
 
@@ -117,11 +119,13 @@ async function afterEndTest(testData: TestData) {
 }
 
 async function getHighscore(testData: TestData) {
+  reviewStateHighscore.value = 'loading'
   const response = await api.get(`/highscore/get/${testData.param?.region}/${testData.param?.length}`)
   console.log(response)
   if (response.data == 'No highscore') {
-    console.log('NO HIGHSCORE')
+    reviewStateHighscore.value = 'new'
   } else {
+    reviewStateHighscore.value = 'normal'
     reviewHighscore.value = {time: response.data.time, score: response.data.score, speed: response.data.speed}
   }
 
