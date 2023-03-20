@@ -4,7 +4,6 @@ from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 import os
 
-from routes.user import UserBlueprint
 from routes.geo import GeoBlueprint
 from routes.test import TestBlueprint
 from routes.highscore import HighscoreBlueprint
@@ -23,7 +22,6 @@ jwt = JWTManager(app)
 def home():
     return 'Api is running'
 
-app.register_blueprint(UserBlueprint, url_prefix='/user')
 app.register_blueprint(GeoBlueprint, url_prefix='/geo')
 app.register_blueprint(TestBlueprint, url_prefix='/test')
 app.register_blueprint(HighscoreBlueprint, url_prefix='/highscore')
