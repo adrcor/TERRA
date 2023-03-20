@@ -19,10 +19,6 @@ export const isAuthenticated = async () => {
     } else {
         if (store.state.auth.idUser !== data.session.user.id) {
             store.commit('auth/setIdUser', data.session.user.id)
-            setUsername()
-        }
-        if (!store.state.auth.username) {
-            setUsername()
         }
         return true
     }

@@ -6,8 +6,6 @@
 
         <form @submit.prevent="onRegister" spellcheck="false" class="flex flex-col gap-3 items-center w-full">
 
-            <UsernameSetter v-model="username" />
-
             <div
                 class="flex flex-row w-full items-center gap-1 rounded-md px-2 py-1 bg-overlay bg-opacity-5 text-on-background">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -88,11 +86,8 @@
 import { ref, watch } from 'vue'
 import { supabase } from '@/supabase'
 import { useRouter } from 'vue-router'
-import UsernameSetter from '@/components/UsernameSetter.vue'
-import { api } from '@/api'
 
 const router = useRouter()
-const username = ref('')
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 const errorText = ref('')
@@ -110,23 +105,11 @@ watch(formRegister, () => {
     }
 }, { deep: true })
 
-watch(username, () => {
-    if (errorText.value) {
-        errorText.value = ''
-    }
-})
 
 async function onRegister() {
     disabled.value = true
     if (formRegister.value.password !== formRegister.value.confirmPassword) {
         errorText.value = "Passwords don't match"
-        disabled.value = false
-        return
-    }
-
-    const verify = await api.get('/user/verify/' + username.value)
-    if (!verify.data.valid) {
-        errorText.value = verify.data.message
         disabled.value = false
         return
     }
@@ -138,10 +121,8 @@ async function onRegister() {
         return
     }
 
-    await api.post('/user/set', { username: username.value })
     disabled.value = false
     router.push({ name: 'account' })
-
 }
 
 
