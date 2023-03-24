@@ -41,4 +41,9 @@ class Test:
         if test is None:
             return True
         return self.is_better_than(test)
-        
+
+    @staticmethod
+    def get_tests(id_user: str, region: str, length: int):
+        data = {'id_user': id_user, 'region': region, 'length': length}
+        response = client.table('test').select('*').match(data).order('id').execute()
+        return [Test(**item) for item in response.data]

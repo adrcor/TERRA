@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-2/3 rounded-lg border-overlay border border-opacity-60">
+    <div class="flex flex-col w-2/3 rounded-lg border-overlay border-2 border-opacity-60">
         <div class="flex flex-row justify-around text-on-background text-opacity-60">
             <button v-for="item in regions" class="flex-1 py-4 rounded-lg bg-overlay bg-opacity-0 hover:bg-opacity-5 hover:text-opacity-100" :class="{'text-primary': item == activeRegion, 'text-overlay text-opacity-60': item != activeRegion}" @click="activeRegion=item">{{ item }}</button>
         </div>
