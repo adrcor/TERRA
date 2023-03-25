@@ -10,6 +10,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import type { ChartOptions, ChartData } from 'chart.js'
 import type { TestDb } from '@/models';
 import { ref, toRaw } from 'vue';
+import { Color } from '@/models/chart-colors';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
@@ -49,10 +50,10 @@ const chartOptions: ChartOptions<'line'> = {
                 display: false
             },
             grid: {
-                color: '#222222'
+                color: Color.white + Color.opacity20
             },
             ticks: {
-                color: '#666666'
+                color: Color.white + Color.opacity40
             }
         }
     },
@@ -69,10 +70,10 @@ const chartOptions: ChartOptions<'line'> = {
             bodyAlign: 'center',
             footerAlign: 'center',
             footerFont: { weight: 'light' },
-            backgroundColor: '#000000aa',
-            footerColor: '#666666',
-            bodyColor: '#ffffff99',
-            titleColor: '#6eb1e1',
+            backgroundColor: Color.background + Color.opacity80,
+            footerColor: Color.white + Color.opacity60,
+            bodyColor: Color.white + Color.opacity80,
+            titleColor: Color.primary,
 
             callbacks: {
                 title: function (context) {
@@ -83,7 +84,7 @@ const chartOptions: ChartOptions<'line'> = {
                     const index = context.dataIndex
                     const data = toRaw(props.data)
                     return [
-                        data[index].score / data[index].length + '%',
+                        Math.floor(data[index].score / data[index].length * 100) + '%',
                         (data[index].time / 1000).toFixed(3) + 's'
                     ]
                 },
@@ -106,7 +107,7 @@ function getChartData(labels: string[], speed: number[]) {
         labels: labels,
         datasets: [{
             label: 'Speed',
-            backgroundColor: '#6eb1e1',
+            backgroundColor: Color.primary,
             data: speed,
             yAxisID: 'ySpeed'
         }

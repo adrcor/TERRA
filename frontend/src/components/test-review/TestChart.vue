@@ -8,6 +8,7 @@ import { Bar } from 'vue-chartjs'
 import type {ChartOptions, ChartData} from 'chart.js'
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
 import type { InputData } from '@/models'
+import { Color } from '@/models/chart-colors'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
 
@@ -39,9 +40,9 @@ const chartOptions: ChartOptions<'bar'> = {
             grid: {
                 color: function(context) {
                     if (context.tick.value % 1000 === 0) {
-                        return '#444444'
+                        return Color.white + Color.opacity40
                     } else {
-                        return '#222222'
+                        return Color.white + Color.opacity20
                     }
                 }
             }
@@ -53,8 +54,9 @@ const chartOptions: ChartOptions<'bar'> = {
             titleAlign: 'center',
             bodyAlign: 'center',
             footerAlign: 'center',
-            bodyColor: '#ffffff99',
-            titleColor: '#6eb1e1',
+            bodyColor: Color.white + Color.opacity60,
+            footerColor: Color.white + Color.opacity80,
+            titleColor: Color.primary,
 
             callbacks: {
                 title: function(_context) {
@@ -103,17 +105,17 @@ function getChartData(labels: string[], reactionTime: number[], typingTime: numb
         labels: labels,
         datasets: [{
             label: 'Reaction Time',
-            backgroundColor: '#6ee18e',
+            backgroundColor: Color.secondary,
             data: reactionTime
         },
         {
             label: 'Typing Time',
-            backgroundColor: '#6eb1e1',
+            backgroundColor: Color.primary,
             data: typingTime
         },
         {
             label: 'Error',
-            backgroundColor: '#cf6679',
+            backgroundColor: Color.error,
             data: error
         }]
     }
