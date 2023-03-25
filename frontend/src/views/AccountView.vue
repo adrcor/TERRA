@@ -26,7 +26,6 @@ onMounted(setData)
 async function setData() {
     const response = await api.get(`test/get/region=${region}&length=${length}`)
     chartData.value = response.data as TestDb[]
-    console.log('account', chartData.value)
     refHistoChart.value.updateChart(response.data)
 }
 

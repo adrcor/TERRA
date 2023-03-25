@@ -27,7 +27,6 @@ export const isAuthenticated = async () => {
 async function setUsername() {
     const response = await api.get('/user/get-username')
     const username = response.data.username
-    console.log(username)
     store.commit('auth/setUsername', username)
 } 
 

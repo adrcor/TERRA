@@ -116,7 +116,6 @@ function getChartData(labels: string[], speed: number[]) {
 }
 
 function updateChart(data: TestDb[]) {
-    console.log('chart', data)
     const labels = data.map((item) => item.timestamp)
     const speed = data.map((item) => item.speed / 1000)
     chartData.value = getChartData(labels, speed)

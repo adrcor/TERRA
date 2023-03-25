@@ -121,7 +121,6 @@ async function afterEndTest(testData: TestData) {
 async function getHighscore(testData: TestData) {
   reviewStateHighscore.value = 'loading'
   const response = await api.get(`/highscore/get/${testData.param?.region}/${testData.param?.length}`)
-  console.log(response)
   if (response.data == 'No highscore') {
     reviewStateHighscore.value = 'new'
   } else {
@@ -133,7 +132,6 @@ async function getHighscore(testData: TestData) {
 
 async function logTest(testData: TestData) {
   const response = await api.post('/test/add', testData)
-  console.log(response)
 }
 
 </script>
