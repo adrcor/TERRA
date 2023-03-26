@@ -4,7 +4,7 @@ import LoginView from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AccountView from '@/views/AccountView.vue'
 import { isAuthenticated } from '@/supabase'
-import { store } from '@/store'
+import PracticeView from '@/views/PracticeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,6 +13,18 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/practice',
+      name: 'practice',
+      component: PracticeView,
+      beforeEnter: async (to, from) => {
+        if (await isAuthenticated()) {
+          return true
+        } else {
+          return {name: 'login'}
+        }
+      }
     },
     {
       path: '/login',

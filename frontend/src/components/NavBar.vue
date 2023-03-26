@@ -1,6 +1,7 @@
 <template>
     <div class="flex flex-row items-center justify-between h-16 w-full max-w-3xl px-6 py-12">
         <button @click.native="onClick" class="text-primary text-3xl">Terra</button>
+        <router-link to="practice" class="text-on-background text-opacity-60">Practice</router-link>
         <router-link to="account" class="text-on-background text-2xl">{{ store.state.auth.logedIn ? 'Account' : 'Login' }}</router-link>
     </div>
 </template>
