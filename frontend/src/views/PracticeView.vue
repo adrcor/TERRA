@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
-        <Grades :data="data"/>
-        <div class="flex flex-row">
+        <Grades :data="data" @hovered-data="onHoveredData"/>
+        <div class="flex flex-row items-center gap-2">
             <PracticeFilter @filter-update="onFilterUpdate"/>
-            
+            <Stats :data="data" :hoveredData="hoveredData"/>
         </div>
     </div>
 </template>
@@ -14,19 +14,27 @@ import { api } from '@/api';
 import PracticeFilter from '@/components/practice/PracticeFilter.vue';
 import Grades from '@/components/practice/Grades.vue';
 import type { PracticeData } from '@/models/practice-data';
+import Stats from '@/components/practice/Stats.vue';
 
 onMounted(() => getData('af'))
 
 const data = ref<PracticeData[] | null>(null)
+const hoveredData = ref<PracticeData | null>(null)
+
+function onHoveredData(obj: PracticeData) {
+    if (hoveredData.value == obj) {
+        hoveredData.value = null
+    } else {
+        hoveredData.value = obj
+    }
+}
 
 async function onClick() {
     const response = await api.get('practice/data/af')
-    console.log(response)
 }
 
 async function getData(region: string) {
     const response = await api.get(`practice/data/${region}`)
-    console.log(response)
     data.value = response.data
 }
 
@@ -36,11 +44,9 @@ async function updateData(region: string) {
         { country: 'Burkina Faso', typing: 300, reaction: 1100 },
         { country: 'Angola', typing: 450, reaction: 600 },
     ]})
-    console.log(response)
 }
 
 function onFilterUpdate(region: string) {
-    console.log(region)
     getData(region.toLowerCase())
 }
 
