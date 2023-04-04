@@ -11,8 +11,13 @@ class PracticeProgress:
         return response.data[0]['progress']
     
     @staticmethod
-    def init_progress(id_user: str, region: str):
+    def init_progress(id_user: str, region: str) -> int:
         response = client.table('practice_progress').insert({'id_user': id_user, 'region': region, 'progress': 5}).execute()
+        return response.data[0]['progress']
+    
+    @staticmethod
+    def update_progress(id_user: str, region: str, value: int) -> int:
+        response = client.table('practice_progress').update({'progress': value}).match({'id_user': id_user, 'region': region}).execute()
         return response.data[0]['progress']
 
 
@@ -50,11 +55,23 @@ class PracticeGrade:
         progress = PracticeProgress.get_progress(id_user, region)
         grades = PracticeGrade.get_grades(id_user, region)
 
+        if progress == PracticeGrade.get_progress_from_grades(grades):
+            progress = PracticeProgress.update_progress(id_user, region, progress + 5)
+
         for index, obj in enumerate(data):
             obj['grades'] = grades[obj['country']]
             obj['unlocked'] = index < progress
 
         return data
+    
+    @staticmethod
+    def get_progress_from_grades(grades: dict) -> int:
+        print(grades)
+        scores = [grade['score'] for grade in grades.values() if grade['score'] >= 80]
+        if len(scores) == len(grades):
+            return -1
+        return len(scores)
+        
     
     @staticmethod
     def update_grades(id_user: str, region: str, data: list[dict]):
@@ -70,6 +87,7 @@ class PracticeGrade:
     
     @staticmethod
     def get_new_grades(current_rating: dict, entry: dict):
+        print(current_rating, entry)
         if current_rating['count'] == 0:
             return {
                 'count': 1,
@@ -98,5 +116,8 @@ class PracticeGrade:
         reaction = min(max(reaction, 500), 2500) #  clip reaction within [500:2500]
         typing = min(typing, 500) # clip typing within [0:500]
         score_reaction = - reaction / 2000 * 60 + 75
-        score_typing = typing / 500
-        return min(score_reaction + score_typing, 100)
+        score_typing = typing / 500 * 60
+        print('------')
+        print('reac ', reaction, score_reaction)
+        print('typing ', typing, score_typing)
+        return min(int(score_reaction + score_typing), 100)

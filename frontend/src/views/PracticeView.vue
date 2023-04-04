@@ -5,6 +5,7 @@
             <PracticeFilter @filter-update="onFilterUpdate"/>
             <Stats :data="data" :hoveredData="hoveredData"/>
         </div>
+        <MainPractice ref="refMainPractice" @end-test="onEndTest"/>
     </div>
 </template>
 
@@ -15,11 +16,18 @@ import PracticeFilter from '@/components/practice/PracticeFilter.vue';
 import Grades from '@/components/practice/Grades.vue';
 import type { PracticeData } from '@/models/practice-data';
 import Stats from '@/components/practice/Stats.vue';
+import MainPractice from '@/components/practice/MainPractice.vue';
 
-onMounted(() => getData('af'))
+onMounted(() => {
+    getData('af')
+    addEventListener('keydown', eventListener)
+})
 
+var region = 'af'
 const data = ref<PracticeData[] | null>(null)
 const hoveredData = ref<PracticeData | null>(null)
+
+const refMainPractice = ref<InstanceType<typeof MainPractice>>()
 
 function onHoveredData(obj: PracticeData) {
     if (hoveredData.value == obj) {
@@ -29,8 +37,17 @@ function onHoveredData(obj: PracticeData) {
     }
 }
 
-async function onClick() {
-    const response = await api.get('practice/data/af')
+function eventListener(event: KeyboardEvent) {
+    if (event.key == 'Tab') {
+        event.preventDefault()
+        event.stopPropagation()
+        onTab()
+    }
+}
+
+function onTab() {
+    refMainPractice.value?.resetTest()
+    refMainPractice.value?.launchTest(data.value, region)
 }
 
 async function getData(region: string) {
@@ -46,8 +63,13 @@ async function updateData(region: string) {
     ]})
 }
 
-function onFilterUpdate(region: string) {
-    getData(region.toLowerCase())
+function onEndTest(d: PracticeData[]) {
+    data.value = d
+}
+
+function onFilterUpdate(r: string) {
+    region = r.toLowerCase()
+    getData(r.toLowerCase())
 }
 
 </script>
