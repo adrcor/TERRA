@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { PracticeData } from '@/models/practice-data'
+import type { PracticeData } from '@/models'
 
 const props = defineProps<{
     data: PracticeData[] | null,

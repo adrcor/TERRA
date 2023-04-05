@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from '../main-test/UserInput.vue';
-import type { PracticeData } from '@/models/practice-data'
+import type { PracticeData } from '@/models'
 import type { Geo } from '@/models'
 import { api } from '@/api';
 

@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PracticeData } from '@/models/practice-data'
+import type { PracticeData } from '@/models'
 
 const props = defineProps<{
     data: PracticeData

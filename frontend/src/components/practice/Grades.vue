@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type { PracticeData } from '@/models/practice-data';
-import GradeCase from './GradeCase.vue';
+import type { PracticeData } from '@/models'
+import GradeCase from './GradeCase.vue'
 
 const emits = defineEmits([
     'hovered-data'

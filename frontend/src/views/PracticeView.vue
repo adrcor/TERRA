@@ -14,7 +14,7 @@ import { onMounted, ref } from 'vue';
 import { api } from '@/api';
 import PracticeFilter from '@/components/practice/PracticeFilter.vue';
 import Grades from '@/components/practice/Grades.vue';
-import type { PracticeData } from '@/models/practice-data';
+import type { PracticeData } from '@/models';
 import Stats from '@/components/practice/Stats.vue';
 import MainPractice from '@/components/practice/MainPractice.vue';
 

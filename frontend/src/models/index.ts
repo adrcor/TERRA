@@ -1,4 +1,6 @@
 export * from './test'
-export * from './input-data'
+export * from './input'
 export * from './geo'
 export * from './params'
+export * from './practice'
+export * from './chart'

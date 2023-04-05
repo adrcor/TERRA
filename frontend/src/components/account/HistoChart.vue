@@ -10,7 +10,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import type { ChartOptions, ChartData } from 'chart.js'
 import type { TestDb } from '@/models';
 import { ref, toRaw } from 'vue';
-import { Color } from '@/models/chart-colors';
+import { Color } from '@/models';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend)
 
