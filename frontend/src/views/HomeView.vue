@@ -13,7 +13,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useStore } from '@/store'
 import { api } from '@/api'
 import MainTest from '@/components/main-test/MainTest.vue'
-import type { CountryData, InputData, TestResult, TestParam, TestData } from '@/models'
+import type { GeoRegion, InputData, TestResult, TestParam, TestData } from '@/models'
 import Filters from '@/components/main-test/Filters.vue'
 import TestReview from '@/components/test-review/TestReview.vue'
 import { isAuthenticated } from '@/supabase'
@@ -43,7 +43,7 @@ const reviewStateHighscore = ref<'loading' | 'normal' | 'new'>('loading')
 
 const reviewHisto = ref<InputData[]>([])
 
-var data: CountryData[] = []
+var data: GeoRegion[] = []
 
 onMounted(() => {
   setData()

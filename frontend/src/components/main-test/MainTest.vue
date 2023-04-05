@@ -10,13 +10,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from './UserInput.vue'
-import type { CountryData, LiveMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
+import type { GeoRegion, LiveMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
 
-var queryData: CountryData[] = []
-var queryList: CountryData[] = []
+var queryData: GeoRegion[] = []
+var queryList: GeoRegion[] = []
 
 var launchRunning: boolean = false
 var testRunning: boolean = false
@@ -120,7 +120,7 @@ function updateMetrics() {
     }
 }
 
-function launchTest(data: CountryData[], testParam: TestParam): void {
+function launchTest(data: GeoRegion[], testParam: TestParam): void {
     if (launchRunning) {
         return
     }

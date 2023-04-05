@@ -7,7 +7,7 @@
 import { ref } from 'vue'
 import UserInput from '../main-test/UserInput.vue';
 import type { PracticeData } from '@/models/practice-data'
-import type { CountryCapital } from '@/models/country-capital'
+import type { Geo } from '@/models'
 import { api } from '@/api';
 
 
@@ -18,7 +18,7 @@ var histo: {country: string, reaction: number, typing: number}[] = []
 
 
 var practiceData: PracticeData[] | null = null
-var queryList: CountryCapital[] = []
+var queryList: Geo[] = []
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
 
@@ -74,9 +74,9 @@ function setQueryList() {
         return null
     }
 
-    const unlocked: CountryCapital[] = practiceData
+    const unlocked: Geo[] = practiceData
         .filter(obj => obj.unlocked)
-        .map(obj => { return { country: obj.country, capital: obj.capital } as CountryCapital })
+        .map(obj => { return { country: obj.country, capital: obj.capital } as Geo })
 
     const weightUnlocked: number[] = practiceData
         .filter(obj => obj.unlocked)
@@ -84,9 +84,9 @@ function setQueryList() {
 
     console.log(weightUnlocked)
 
-    const mandatory: CountryCapital[] = shuffle(practiceData
+    const mandatory: Geo[] = shuffle(practiceData
         .filter(obj => obj.unlocked && obj.grades.score < 40)
-        .map(obj => { return { country: obj.country, capital: obj.capital } as CountryCapital }))
+        .map(obj => { return { country: obj.country, capital: obj.capital } as Geo }))
 
     queryList = []
     const buffer: string[] = []
@@ -117,7 +117,7 @@ function setQueryList() {
 
 }
 
-function shuffle(array: CountryCapital[]) {
+function shuffle(array: Geo[]) {
     return array.map(value => ({ value, sort: Math.random() }))
         .sort((a, b) => a.sort - b.sort)
         .map(({ value }) => value)
