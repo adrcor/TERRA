@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from './UserInput.vue'
-import type { GeoRegion, LiveMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
+import type { GeoRegion, TestMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
@@ -43,7 +43,7 @@ const testData: TestData = {
     }
 }
 
-const metrics = ref<LiveMetrics>({
+const metrics = ref<TestMetrics>({
     time: 0,
     answer: 0,
     length: 0,

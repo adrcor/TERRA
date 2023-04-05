@@ -5,11 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import Highscore from '@/components/account/Highscore.vue';
-import HistoChart from '@/components/account/HistoChart.vue';
-import type { Length } from '@/models/length';
-import type { Region } from '@/models/region';
-import type { TestDb } from '@/models';
+import Highscore from '@/components/account/Highscore.vue'
+import HistoChart from '@/components/account/HistoChart.vue'
+import type { TestDb, Region, Length } from '@/models'
 import { supabase } from '@/supabase'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'

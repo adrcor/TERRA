@@ -8,10 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import type { LiveMetrics } from '@/models';
+import type { TestMetrics } from '@/models';
 
 defineProps<{
-    metrics: LiveMetrics
+    metrics: TestMetrics
 }>()
 
 </script>

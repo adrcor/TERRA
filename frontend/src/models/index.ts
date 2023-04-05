@@ -1,8 +1,4 @@
-export * from './live-metrics'
+export * from './test'
 export * from './input-data'
-export * from './test-result'
-export * from './test-param'
-export * from './test-data'
-export * from './test-db'
-
 export * from './geo'
+export * from './params'
