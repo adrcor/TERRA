@@ -11,8 +11,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { listRegion, type Region } from '@/models/region'
-import { listLength, type Length} from '@/models/length'
+import { listRegion, listLength, type Region, type Length } from '@/models'
 import type { TestDb } from '@/models'
 import { api } from '@/api'
 import HighscoreCard from './HighscoreCard.vue'
