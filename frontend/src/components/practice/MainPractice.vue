@@ -22,7 +22,7 @@ var queryList: CountryCapital[] = []
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
 
-const query = ref<string>('')
+const query = ref<string>('Press Tab to start')
 
 defineExpose({
     resetTest,
