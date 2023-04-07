@@ -5,6 +5,7 @@ export const Color = {
     background: '#121212',
     white: '#ffffff',
     black: '#000000',
+    opacity5: '0d',
     opacity20: '33',
     opacity40: '66',
     opacity60: '99',

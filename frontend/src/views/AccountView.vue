@@ -10,16 +10,20 @@ import HistoChart from '@/components/account/HistoChart.vue'
 import type { TestDb, Region, Length } from '@/models'
 import { supabase } from '@/supabase'
 import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
 import { ref, onMounted } from 'vue'
 import { api } from '@/api';
 
 const router = useRouter()
+const store = useStore()
 const chartData = ref<TestDb[]>([])
 const refHistoChart = ref()
-var region = 'World'
-var length = 10
+var region: Region = store.state.filter.region
+var length: Length = store.state.filter.length
 
-onMounted(setData)
+onMounted(() => {
+    onSelect(store.state.filter.region, store.state.filter.length)
+})
 
 async function setData() {
     const response = await api.get(`test/get/region=${region}&length=${length}`)

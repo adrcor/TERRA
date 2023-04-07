@@ -1,5 +1,5 @@
 <template>
-    <div class="w-2/3 h-1/2 p-4 border-2 border-overlay border-opacity-60 rounded-lg">
+    <div class="w-2/3 h-1/2 p-4 bg-overlay bg-opacity-5 rounded-lg">
         <Line :data="chartData" :options="chartOptions"/>
     </div>
 </template>
@@ -44,13 +44,20 @@ const chartOptions: ChartOptions<'line'> = {
         ySpeed: {
             type: 'linear',
             display: true,
+            title: {
+                display: true,
+                text: 'Speed',
+                font: {
+                    size: 14
+                }
+            },
             position: 'right',
             min: 0,
             border: {
                 display: false
             },
             grid: {
-                color: Color.white + Color.opacity20
+                color: Color.white + Color.opacity5
             },
             ticks: {
                 color: Color.white + Color.opacity40

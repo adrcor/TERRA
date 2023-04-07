@@ -14,6 +14,7 @@ import { ref, onMounted } from 'vue'
 import { listRegion, listLength, type Region, type Length } from '@/models'
 import type { TestDb } from '@/models'
 import { api } from '@/api'
+import { useStore } from '@/store'
 import HighscoreCard from './HighscoreCard.vue'
 
 const emits = defineEmits([
@@ -27,9 +28,11 @@ type Highscores = {
     [key in Region]: {[key in Length]: TestDb | null}
 }
 
-const activeRegion = ref<Region>('World')
-const selectedRegion = ref<Region>('World')
-const selectedLength = ref<Length>(10)
+const store = useStore() 
+
+const activeRegion = ref<Region>(store.state.filter.region)
+const selectedRegion = ref<Region>(store.state.filter.region)
+const selectedLength = ref<Length>(store.state.filter.length)
 
 const highscores = ref<Highscores>(regions.reduce((o, key) => ({...o, [key]: lengths.reduce((o, key) => ({ ...o, [key]: null }), {}) }), {}) as Highscores)
 
@@ -41,7 +44,6 @@ async function getHighscore() {
         highscores.value[test.region as Region][test.length as Length] = test
     })
 }
-
 
 function onClick(region: Region, length: Length) {
     selectedRegion.value = region
