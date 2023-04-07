@@ -1,5 +1,5 @@
 <template>
-    <div class="w-2/3 h-1/2 p-4 bg-overlay bg-opacity-5 rounded-lg">
+    <div class="h-1/2 p-4 bg-overlay bg-opacity-5 rounded-lg">
         <Line :data="chartData" :options="chartOptions"/>
     </div>
 </template>
