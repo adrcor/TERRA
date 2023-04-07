@@ -28,3 +28,11 @@ def update(region: str):
     print(params)
     data = PracticeGrade.update_grades(id_user, region, params)
     return data
+
+@PracticeBlueprint.route('/delete', methods=['DELETE'])
+@jwt_required()
+def delete_all():
+    id_user = get_jwt_identity()
+    PracticeProgress.delete_all(id_user)
+    PracticeGrade.delete_all(id_user)
+    return 'practice data deleted'

@@ -20,6 +20,10 @@ class PracticeProgress:
         response = client.table('practice_progress').update({'progress': value}).match({'id_user': id_user, 'region': region}).execute()
         return response.data[0]['progress']
 
+    @staticmethod
+    def delete_all(id_user):
+        response = client.table('practice_progress').delete().eq('id_user', id_user).execute()
+
 
 class PracticeGrade:
 
@@ -121,3 +125,8 @@ class PracticeGrade:
         print('reac ', reaction, score_reaction)
         print('typing ', typing, score_typing)
         return min(int(score_reaction + score_typing), 100)
+    
+    @staticmethod
+    def delete_all(id_user):
+        response = client.table('practice_grade').delete().eq('id_user', id_user).execute()
+

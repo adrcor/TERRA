@@ -5,7 +5,7 @@
                        active:bg-opacity-40 active: text-opacit-60">
             Reset Test Data
         </button>
-        <button class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
+        <button @click="resetPractice" class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
                         hover:bg-opacity-60 hover:text-on-error hover:text-opacity-100
                         active:bg-opacity-40 active: text-opacit-60">
             Reset Practice Data
@@ -16,6 +16,7 @@
             Logout
         </button>
     </div>
+    
 </template>
 
 <script setup lang="ts">
@@ -32,6 +33,11 @@ async function logout() {
 
 async function resetTest() {
     const response = await api.delete('/test/delete')
+    router.go(0)
+}
+
+async function resetPractice() {
+    const response = await api.delete('/practice/delete')
     router.go(0)
 }
 
