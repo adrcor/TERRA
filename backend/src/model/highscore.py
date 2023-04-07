@@ -23,3 +23,7 @@ class Highscore:
         data = {'id_user': test.id_user, 'region': test.region, 'length': test.length, 'id_test': test.id}
         client.table('highscore').upsert(data).execute()
         
+    @staticmethod
+    def delete_all(id_user):
+        response = client.table('highscore').delete().eq('id_user', id_user).execute()
+        return len(response.data)

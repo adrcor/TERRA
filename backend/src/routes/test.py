@@ -25,3 +25,11 @@ def get_test(region: str, length: int):
     id_user = get_jwt_identity()
     tests = Test.get_tests(id_user, region, length)
     return [test.as_dict() for test in tests]
+
+@TestBlueprint.route('/delete', methods=['DELETE'])
+@jwt_required()
+def delete_all():
+    id_user = get_jwt_identity()
+    Highscore.delete_all(id_user)
+    n_test_deleted = Test.delete_all(id_user)
+    return {'tests deleted': n_test_deleted}

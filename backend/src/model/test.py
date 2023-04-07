@@ -47,3 +47,8 @@ class Test:
         data = {'id_user': id_user, 'region': region, 'length': length}
         response = client.table('test').select('*').match(data).order('id').execute()
         return [Test(**item) for item in response.data]
+    
+    @staticmethod
+    def delete_all(id_user) -> int:
+        response = client.table('test').delete().eq('id_user', id_user).execute()
+        return len(response.data)
