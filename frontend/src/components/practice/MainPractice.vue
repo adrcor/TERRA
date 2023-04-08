@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from '../main-test/UserInput.vue';
-import type { PracticeData, Region } from '@/models'
+import type { PracticeData, PracticeHisto, Region } from '@/models'
 import type { Geo } from '@/models'
 import { api } from '@/api';
 import { getQueryList } from '@/composables/practiceQuery';
@@ -14,7 +14,7 @@ import { getQueryList } from '@/composables/practiceQuery';
 var launchRunning = false
 var practiceRunning = false
 var region: Region | null = null
-var histo: {country: string, reaction: number, typing: number}[] = []
+var histo: PracticeHisto[] = []
 
 var queryList: Geo[] = []
 
@@ -76,18 +76,11 @@ function updateQuery() {
     refUserInput.value?.setExpected(newQuery.capital)
 }
 
-async function logProgress() {
-    const response = await api.post(`practice/update/${region}`, {
-        params: histo
-    })
-    emits('end-test', response.data, histo)
-}
-
 function onAnswer(inputData: any) {
     const typingTime = inputData.timeTotal - inputData.timeReaction
     const msPerChar = typingTime / inputData.answer.length
     const charPerMin = Math.floor(60000 / msPerChar)
-    const newLog = { country: query.value, reaction: inputData.timeReaction, typing: charPerMin }
+    const newLog = { country: query.value, reaction: inputData.timeReaction, typing: charPerMin, valid: inputData.valid }
     histo.push(newLog)
     updateQuery()
 }

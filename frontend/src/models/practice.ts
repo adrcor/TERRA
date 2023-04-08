@@ -14,3 +14,11 @@ export interface Grades {
     typing: number,
     score: number
 }
+
+
+export interface PracticeHisto {
+    country: string
+    reaction: number,
+    typing: number,
+    valid: boolean
+}
