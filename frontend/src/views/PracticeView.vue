@@ -17,7 +17,7 @@ import { onMounted, ref } from 'vue';
 import { api } from '@/api';
 import PracticeFilter from '@/components/practice/PracticeFilter.vue';
 import Grades from '@/components/practice/Grades.vue';
-import type { PracticeData, Region } from '@/models';
+import type { PracticeData, PracticeHisto, Region } from '@/models';
 import Stats from '@/components/practice/Stats.vue';
 import MainPractice from '@/components/practice/MainPractice.vue';
 
@@ -46,6 +46,9 @@ function eventListener(event: KeyboardEvent) {
         event.stopPropagation()
         onTab()
     }
+    if (event.key == 'Escape') {
+        onEscape()
+    }
 }
 
 function onTab() {
@@ -53,29 +56,25 @@ function onTab() {
     refMainPractice.value?.launchTest(data.value, region)
 }
 
-async function getData(region: Region) {
-    const response = await api.get(`practice/data/${region}`)
-    data.value = response.data
-}
-
-async function updateData(region: string) {
-    const response = await api.post(`practice/update/${region}`, {params: [
-        { country: 'Angola', typing: 400, reaction: 800 },
-        { country: 'Burkina Faso', typing: 300, reaction: 1100 },
-        { country: 'Angola', typing: 450, reaction: 600 },
-    ]})
-}
-
-async function onEndTest(histo: { country: string, reaction: number, typing: number }[], r: Region) {
-    const response = await api.post(`practice/update/${r}`, {
-        params: histo
-    })
-    data.value = response.data
+function onEscape() {
+    refMainPractice.value?.resetTest()
 }
 
 function onFilterUpdate(r: Region) {
     region = r
     getData(r)
+}
+
+async function getData(r: Region) {
+    const response = await api.get(`practice/data/${r}`)
+    data.value = response.data
+}
+
+async function onEndTest(histo: PracticeHisto[], r: Region) {
+    const response = await api.post(`practice/update/${r}`, {
+        params: histo
+    })
+    data.value = response.data
 }
 
 </script>
