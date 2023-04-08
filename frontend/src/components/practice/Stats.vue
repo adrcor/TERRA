@@ -14,13 +14,6 @@ const props = defineProps<{
     data: PracticeData[] | null,
 }>()
 
-const unlocked = computed(() => {
-    if (props.data == null) {
-        return 0
-    }
-    return props.data.filter(obj => obj.unlocked).length
-})
-
 const typing = computed(() => {
     if (props.data == null) {
         return 0
@@ -53,6 +46,5 @@ const mean = computed(() => {
     }
     return scores.reduce((prev, curr) => (prev + curr)) / scores.length
 })
-
 
 </script>

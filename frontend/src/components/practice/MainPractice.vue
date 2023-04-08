@@ -63,7 +63,7 @@ function resetTest(): void {
     }
     practiceRunning = false
 
-    query.value = 'Press Tab to start a test'
+    query.value = 'Press Tab to start'
     refUserInput.value?.setExpected('')
 }
 
@@ -148,7 +148,7 @@ function updateQuery() {
 
 function endTest() {
     refUserInput.value?.setExpected('')
-    query.value = 'Press Tab to restart'
+    query.value = 'Press Tab to start'
     logProgress()
     histo = []
     practiceRunning = false

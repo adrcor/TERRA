@@ -29,7 +29,7 @@ var error: number = 0
 const easeIn = ref<boolean>(false)
 setTimeout(() => easeIn.value = true, 10)
 
-const query = ref<string>('Press Tab to start a test')
+const query = ref<string>('Press Tab to start')
 
 const testData: TestData = {
     result: {
@@ -162,7 +162,7 @@ function resetTest(): void {
     score = 0
     error = 0
 
-    query.value = 'Press Tab to start a test'
+    query.value = 'Press Tab to start'
     refUserInput.value?.setExpected('')
 }
 
