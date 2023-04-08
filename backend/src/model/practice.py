@@ -70,7 +70,6 @@ class PracticeGrade:
     
     @staticmethod
     def get_progress_from_grades(grades: dict) -> int:
-        print(grades)
         scores = [grade['score'] for grade in grades.values() if grade['score'] >= 80]
         if len(scores) == len(grades):
             return -1
@@ -91,7 +90,6 @@ class PracticeGrade:
     
     @staticmethod
     def get_new_grades(current_rating: dict, entry: dict):
-        print(current_rating, entry)
         if current_rating['count'] == 0:
             return {
                 'count': 1,
@@ -117,16 +115,30 @@ class PracticeGrade:
 
     @staticmethod
     def calculate_score(reaction: int, typing: int):
-        reaction = min(max(reaction, 500), 2500) #  clip reaction within [500:2500]
-        typing = min(typing, 500) # clip typing within [0:500]
-        score_reaction = - reaction / 2000 * 60 + 75
-        score_typing = typing / 500 * 60
-        print('------')
-        print('reac ', reaction, score_reaction)
-        print('typing ', typing, score_typing)
+        score_reaction = PracticeGrade.calculate_reaction_score(reaction)
+        score_typing = PracticeGrade.calculate_typing_score(typing)
         return min(int(score_reaction + score_typing), 100)
     
     @staticmethod
     def delete_all(id_user):
         response = client.table('practice_grade').delete().eq('id_user', id_user).execute()
 
+    @staticmethod
+    def calculate_reaction_score(reaction: int):
+        reaction = min(max(reaction, 600), 4000)
+        if reaction >= 2000:
+            return int(-reaction / 80 + 50)
+        if reaction >= 700:
+            return int(-reaction / 52 + 63.46)
+        else:
+            return int(-reaction / 20 + 85)
+
+    @staticmethod
+    def calculate_typing_score(typing: int):
+        typing = min(typing, 750)
+        if typing <= 150:
+            return int(typing / 6)
+        if typing <= 500:
+            return int(typing / 14 + 14.29)
+        else:
+            return int(typing / 50 + 40)
