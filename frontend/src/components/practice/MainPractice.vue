@@ -6,14 +6,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from '../main-test/UserInput.vue';
-import type { PracticeData } from '@/models'
+import type { PracticeData, Region } from '@/models'
 import type { Geo } from '@/models'
 import { api } from '@/api';
 import { getQueryList } from '@/composables/practiceQuery';
 
 var launchRunning = false
 var practiceRunning = false
-var region: string | null = null
+var region: Region | null = null
 var histo: {country: string, reaction: number, typing: number}[] = []
 
 var queryList: Geo[] = []
@@ -31,20 +31,15 @@ const emits = defineEmits([
     'end-test'
 ])
 
-function launchTest(data: PracticeData[] | null, r: string): void {
-    if (launchRunning) {
+function launchTest(data: PracticeData[] | null, r: Region): void {
+    if (launchRunning || !data) {
         return
     }
-    region = r 
     launchRunning = true
-
-    query.value = '3'
-
-    if (!data) {
-       return 
-    }
+    region = r
     queryList = getQueryList(data)
 
+    query.value = '3'
     setTimeout(() => query.value = '2', 500)
     setTimeout(() => query.value = '1', 1000)
     setTimeout(startTest, 1500)
@@ -53,10 +48,8 @@ function launchTest(data: PracticeData[] | null, r: string): void {
 function startTest() {
     practiceRunning = true
     launchRunning = false
-
     updateQuery()
 }
-
 
 function resetTest(): void {
     if (launchRunning) {
@@ -68,6 +61,14 @@ function resetTest(): void {
     refUserInput.value?.setExpected('')
 }
 
+function endTest() {
+    refUserInput.value?.setExpected('')
+    query.value = 'Press Tab to start'
+    logProgress()
+    histo = []
+    practiceRunning = false
+}
+
 function updateQuery() {
     const newQuery = queryList.shift()
     if (newQuery == undefined) {
@@ -76,14 +77,6 @@ function updateQuery() {
     }
     query.value = newQuery.country
     refUserInput.value?.setExpected(newQuery.capital)
-}
-
-function endTest() {
-    refUserInput.value?.setExpected('')
-    query.value = 'Press Tab to start'
-    logProgress()
-    histo = []
-    practiceRunning = false
 }
 
 async function logProgress() {
@@ -97,9 +90,8 @@ function onAnswer(inputData: any) {
     const typingTime = inputData.timeTotal - inputData.timeReaction
     const msPerChar = typingTime / inputData.answer.length
     const charPerMin = Math.floor(60000 / msPerChar)
-    const newLog = {country: query.value, reaction: inputData.timeReaction, typing: charPerMin }
+    const newLog = { country: query.value, reaction: inputData.timeReaction, typing: charPerMin }
     histo.push(newLog)
-    // time 200ms - length 10 
     updateQuery()
 }
 

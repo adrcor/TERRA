@@ -17,16 +17,16 @@ import { onMounted, ref } from 'vue';
 import { api } from '@/api';
 import PracticeFilter from '@/components/practice/PracticeFilter.vue';
 import Grades from '@/components/practice/Grades.vue';
-import type { PracticeData } from '@/models';
+import type { PracticeData, Region } from '@/models';
 import Stats from '@/components/practice/Stats.vue';
 import MainPractice from '@/components/practice/MainPractice.vue';
 
 onMounted(() => {
-    getData('af')
+    getData('AF')
     addEventListener('keydown', eventListener)
 })
 
-var region = 'af'
+var region: Region = 'AF'
 const data = ref<PracticeData[] | null>(null)
 const hoveredData = ref<PracticeData | null>(null)
 
@@ -53,7 +53,7 @@ function onTab() {
     refMainPractice.value?.launchTest(data.value, region)
 }
 
-async function getData(region: string) {
+async function getData(region: Region) {
     const response = await api.get(`practice/data/${region}`)
     data.value = response.data
 }
@@ -70,9 +70,9 @@ function onEndTest(d: PracticeData[]) {
     data.value = d
 }
 
-function onFilterUpdate(r: string) {
-    region = r.toLowerCase()
-    getData(r.toLowerCase())
+function onFilterUpdate(r: Region) {
+    region = r
+    getData(r)
 }
 
 </script>
