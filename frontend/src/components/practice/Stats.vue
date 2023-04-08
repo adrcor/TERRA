@@ -1,15 +1,8 @@
 <template>
-    <div v-if="hoveredData != null" class="flex flex-row text-on-background border-2 border-on-background opacity-60 rounded-md p-2 gap-4">
-        <a>Country = {{ hoveredData.country }}</a>
-        <a>Score = {{ hoveredData.grades.score }}</a>
-        <a>Reaction = {{ hoveredData.grades.reaction }}</a>
-        <a>Typing = {{ hoveredData.grades.typing }}</a>
-    </div>
-
-    <div v-else="" class="flex flex-row text-on-background border-2 border-on-background opacity-60 rounded-md p-2 gap-4">
-        <a>Unlocked = {{ unlocked }}/{{ total }}</a>
-        <a>Valid = {{ valid }}/{{ total }}</a>
-        <a>Mean = {{ Math.floor(mean) }}</a>
+    <div class="flex flex-row text-on-background opacity-60 rounded-md p-2 gap-4">
+        <a>{{ mean.toFixed(1) }}%</a>
+        <a>{{ (typing / 5).toFixed(0) }}wpm</a>
+        <a>{{ reaction.toFixed(0) }}ms</a>
     </div>
 </template>
 
@@ -19,7 +12,6 @@ import type { PracticeData } from '@/models'
 
 const props = defineProps<{
     data: PracticeData[] | null,
-    hoveredData: PracticeData | null
 }>()
 
 const unlocked = computed(() => {
@@ -29,26 +21,36 @@ const unlocked = computed(() => {
     return props.data.filter(obj => obj.unlocked).length
 })
 
-const total = computed(() => {
+const typing = computed(() => {
     if (props.data == null) {
         return 0
     }
-    return props.data.length
+    const scores = props.data.filter(obj => obj.grades.count > 0).map(obj => obj.grades.typing)
+    if (scores.length == 0) {
+        return 0
+    }
+    return scores.reduce((prev, curr) => (prev + curr)) / scores.length
 })
 
-const valid = computed(() => {
+const reaction = computed(() => {
     if (props.data == null) {
         return 0
-    }''
-   return props.data.filter(obj => obj.grades.score >= 80).length 
+    }
+    const scores = props.data.filter(obj => obj.grades.count > 0).map(obj => obj.grades.reaction)
+    if (scores.length == 0) {
+        return 0
+    }
+    return scores.reduce((prev, curr) => (prev + curr)) / scores.length
 })
-
 
 const mean = computed(() => {
     if (props.data == null) {
         return 0
     }
-    const scores = props.data.filter(obj => obj.unlocked).map(obj => obj.grades.score)
+    const scores = props.data.map(obj => obj.grades.score)
+    if (scores.length == 0) {
+        return 0
+    }
     return scores.reduce((prev, curr) => (prev + curr)) / scores.length
 })
 

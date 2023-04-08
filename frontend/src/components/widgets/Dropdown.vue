@@ -9,7 +9,7 @@
         </button>
 
         <div ref="refDropdown" v-if="open"
-            class="flex flex-col absolute w-full my-[3rem] rounded-md bg-background border-2 border-on-background border-opacity-60 hover:border-opacity-100">
+            class="flex flex-col absolute w-full my-[3rem] rounded-md bg-background border-2 border-on-background border-opacity-60 hover:border-opacity-100 z-50">
             <button v-for="element in props.options" @click="onSelect(element)"
                 class="text-on-background hover:bg-overlay hover:bg-opacity-5 text-opacity-60 hover:text-opacity-100 py-1">
                 {{ element }}

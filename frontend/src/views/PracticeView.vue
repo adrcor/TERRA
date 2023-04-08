@@ -1,11 +1,14 @@
 <template>
-    <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
-        <Grades :data="data" @hovered-data="onHoveredData"/>
-        <div class="flex flex-row items-center gap-2">
+    <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4 w-2/3">
+        <div class="flex flex-col flex-1 items-center gap-2 h-fit justify-end">
             <PracticeFilter @filter-update="onFilterUpdate"/>
-            <Stats :data="data" :hoveredData="hoveredData"/>
+            <Grades :data="data" @hovered-data="onHoveredData"/>
         </div>
-        <MainPractice ref="refMainPractice" @end-test="onEndTest"/>
+        <div class="flex flex-col items-center w-full">
+            <Stats :data="data"/>
+            <MainPractice ref="refMainPractice" @end-test="onEndTest"/>
+        </div>
+        <div class="flex-1"></div>
     </div>
 </template>
 
