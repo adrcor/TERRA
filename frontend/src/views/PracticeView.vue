@@ -2,7 +2,7 @@
     <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4 w-2/3">
         <div class="flex flex-col flex-1 items-center gap-2 h-fit justify-end">
             <PracticeFilter @filter-update="onFilterUpdate"/>
-            <Grades :data="data" @hovered-data="onHoveredData"/>
+            <Grades :data="data" :region="region"/>
         </div>
         <div class="flex flex-col items-center w-full">
             <Stats :data="data"/>
@@ -22,23 +22,14 @@ import Stats from '@/components/practice/Stats.vue';
 import MainPractice from '@/components/practice/MainPractice.vue';
 
 onMounted(() => {
-    getData('AF')
+    updateData()
     addEventListener('keydown', eventListener)
 })
 
-var region: Region = 'AF'
+const region = ref<Region>('AF')
 const data = ref<PracticeData[] | null>(null)
-const hoveredData = ref<PracticeData | null>(null)
 
 const refMainPractice = ref<InstanceType<typeof MainPractice>>()
-
-function onHoveredData(obj: PracticeData) {
-    if (hoveredData.value == obj) {
-        hoveredData.value = null
-    } else {
-        hoveredData.value = obj
-    }
-}
 
 function eventListener(event: KeyboardEvent) {
     if (event.key == 'Tab') {
@@ -52,8 +43,11 @@ function eventListener(event: KeyboardEvent) {
 }
 
 function onTab() {
+    if (!data) {
+        return
+    }
     refMainPractice.value?.resetTest()
-    refMainPractice.value?.launchTest(data.value, region)
+    refMainPractice.value?.launchTest(data.value, region.value)
 }
 
 function onEscape() {
@@ -61,12 +55,13 @@ function onEscape() {
 }
 
 function onFilterUpdate(r: Region) {
-    region = r
-    getData(r)
+    region.value = r
+    updateData()
 }
 
-async function getData(r: Region) {
-    const response = await api.get(`practice/data/${r}`)
+async function updateData() {
+    data.value = null
+    const response = await api.get(`practice/data/${region.value}`)
     data.value = response.data
 }
 
