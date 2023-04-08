@@ -66,8 +66,11 @@ async function updateData(region: string) {
     ]})
 }
 
-function onEndTest(d: PracticeData[]) {
-    data.value = d
+async function onEndTest(histo: { country: string, reaction: number, typing: number }[], r: Region) {
+    const response = await api.post(`practice/update/${r}`, {
+        params: histo
+    })
+    data.value = response.data
 }
 
 function onFilterUpdate(r: Region) {

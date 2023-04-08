@@ -56,17 +56,14 @@ function resetTest(): void {
         return
     }
     practiceRunning = false
-
+    histo = []
     query.value = 'Press Tab to start'
     refUserInput.value?.setExpected('')
 }
 
 function endTest() {
-    refUserInput.value?.setExpected('')
-    query.value = 'Press Tab to start'
-    logProgress()
-    histo = []
-    practiceRunning = false
+    emits('end-test', histo, region)
+    resetTest()
 }
 
 function updateQuery() {
@@ -83,7 +80,7 @@ async function logProgress() {
     const response = await api.post(`practice/update/${region}`, {
         params: histo
     })
-    emits('end-test', response.data)
+    emits('end-test', response.data, histo)
 }
 
 function onAnswer(inputData: any) {
