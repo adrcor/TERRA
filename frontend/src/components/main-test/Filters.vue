@@ -8,7 +8,7 @@
             </svg>
         </Dropdown>
 
-        <Dropdown :default="store.state.filter.length.toString()" :options="lengthOptions" @on-update="onUpdateLength">
+        <Dropdown :default="store.state.filter.length" :options="lengthOptions" @on-update="onUpdateLength">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -20,19 +20,20 @@
 
 <script setup lang="ts">
 import Dropdown from '@/components/widgets/Dropdown.vue'
+import { listLength, listRegion, type Length, type Region } from '@/models';
 import { useStore } from '@/store'
 
 const store = useStore()
 
-const lengthOptions = ['5', '10', '25', '50']
-const regionOptions = ['World', 'AF', 'AS', 'EU', 'NA', 'OC', 'SA']
+const lengthOptions: Length[] = listLength
+const regionOptions: Region[] = listRegion
 
 
-function onUpdateRegion(value: string) {
+function onUpdateRegion(value: Region) {
     store.commit('filter/set_region', value)
 }
 
-function onUpdateLength(value: string) {
+function onUpdateLength(value: Length) {
     store.commit('filter/set_length', value)
 }
 </script>

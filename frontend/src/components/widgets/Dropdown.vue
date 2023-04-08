@@ -23,12 +23,13 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 
 const props = defineProps<{
-    default: string,options: string[]
+    default: number | string,
+    options: Array<number | string>
 }>()
 
 const open = ref<boolean>(false)
 const refDropdown = ref<HTMLDivElement>()
-const refButton = ref<HTMLDivElement>()
+const refButton = ref<HTMLButtonElement>()
 const selected = ref(props.default)
 
 const emits = defineEmits([
@@ -48,7 +49,7 @@ function checkClickOutside(event: MouseEvent) {
     }
 }
 
-function onSelect(element: string) {
+function onSelect(element: number | string) {
     open.value = false
     selected.value = element
     emits('on-update', selected.value)
