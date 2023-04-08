@@ -9,15 +9,13 @@ import UserInput from '../main-test/UserInput.vue';
 import type { PracticeData } from '@/models'
 import type { Geo } from '@/models'
 import { api } from '@/api';
-
+import { getQueryList } from '@/composables/practiceQuery';
 
 var launchRunning = false
 var practiceRunning = false
 var region: string | null = null
 var histo: {country: string, reaction: number, typing: number}[] = []
 
-
-var practiceData: PracticeData[] | null = null
 var queryList: Geo[] = []
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
@@ -34,15 +32,18 @@ const emits = defineEmits([
 ])
 
 function launchTest(data: PracticeData[] | null, r: string): void {
-    if (launchRunning || !data) {
+    if (launchRunning) {
         return
     }
     region = r 
     launchRunning = true
-    practiceData = data
 
     query.value = '3'
-    setQueryList()
+
+    if (!data) {
+       return 
+    }
+    queryList = getQueryList(data)
 
     setTimeout(() => query.value = '2', 500)
     setTimeout(() => query.value = '1', 1000)
@@ -65,75 +66,6 @@ function resetTest(): void {
 
     query.value = 'Press Tab to start'
     refUserInput.value?.setExpected('')
-}
-
-
-function setQueryList() {
-
-    if (practiceData == null) {
-        return null
-    }
-
-    const unlocked: Geo[] = practiceData
-        .filter(obj => obj.unlocked)
-        .map(obj => { return { country: obj.country, capital: obj.capital } as Geo })
-
-    const weightUnlocked: number[] = practiceData
-        .filter(obj => obj.unlocked)
-        .map(obj => Math.max((100 - obj.grades.score), 1))
-
-    console.log(weightUnlocked)
-
-    const mandatory: Geo[] = shuffle(practiceData
-        .filter(obj => obj.unlocked && obj.grades.score < 40)
-        .map(obj => { return { country: obj.country, capital: obj.capital } as Geo }))
-
-    queryList = []
-    const buffer: string[] = []
-    const minDistQuery = 3
-
-    while (queryList.length < 10) {
-        if (mandatory.length > 0) {
-            const nextMandatory = mandatory.shift()
-            if (!nextMandatory) {
-                return
-            }
-            queryList.push(nextMandatory)
-            buffer.push(nextMandatory.country)
-        } else {
-            var nextQuery = randomWeighted(unlocked, weightUnlocked)
-            while (buffer.includes(nextQuery.country)) {
-                nextQuery = randomWeighted(unlocked, weightUnlocked)
-            }
-            queryList.push(nextQuery)
-            buffer.push(nextQuery.country)
-        }
-
-        if (buffer.length > minDistQuery) {
-            buffer.shift()
-        }
-    }
-
-
-}
-
-function shuffle(array: Geo[]) {
-    return array.map(value => ({ value, sort: Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({ value }) => value)
-}
-
-
-function randomWeighted<T>(options: T[], weight: number[]): T {
-    const cumulativeWeight: number[] = []
-    weight.reduce((prev, curr, i) => cumulativeWeight[i] = prev + curr, 0)
-    const random = Math.random() * cumulativeWeight[cumulativeWeight.length - 1]
-    for (var i = 0; i < options.length; i++) {
-        if (random < cumulativeWeight[i]) {
-            return options[i]
-        }
-    }
-    return options[options.length - 1]
 }
 
 function updateQuery() {
