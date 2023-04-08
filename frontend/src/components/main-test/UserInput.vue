@@ -1,8 +1,9 @@
 <template>
-    <div class="flex flex-col items-center text-on-background">
+    <div class="flex flex-col items-center text-on-background gap-3">
         <input ref="refInput" v-model="valueInput" @blur="focus" @input="event => onInput(event as InputEvent)" placeholder="Unfocused"
             class="text-center text-2xl bg-transparent outline-none caret-primary focus:placeholder-transparent placeholder-on-background placeholder-opacity-60" />
-        <h1 class="h-4" :class="displayHelp == true ? 'opacity-100' : 'opacity-0'">{{ expected }}</h1>
+        <h1 v-if="!showAnswer" class="h-4 transition-opacity duration-1000" :class="{'opacity-60': showHelp, 'opacity-0': !showHelp}">Press / to show the answer</h1>
+        <h1 v-else="" class="h-4 opacity-100">{{ expected }}</h1>
     </div>
 </template>
 
@@ -13,16 +14,17 @@ import type { InputData } from '@/models'
 const refInput = ref<HTMLInputElement>()
 const valueInput = ref<string>('')
 const expected = ref<string>('')
-const displayHelp = ref<boolean>(false)
+const showAnswer = ref<boolean>(false)
+const showHelp = ref<boolean>(false)
+var helpTimeout: ReturnType<typeof setTimeout> | null = null
 
 var startTime: number = 0
 var timeReaction: number = 0
 
-
 const props = defineProps({
     helpCharacter: {
         type: String,
-        default: '.'
+        default: '/'
     }
 })
 
@@ -53,9 +55,9 @@ function onInput(input: InputEvent) {
     const normalizedExpected = normalize(expected.value)
 
     // Display help when help character is detected
-    if (input.data == props.helpCharacter && !displayHelp.value) {
+    if (input.data == props.helpCharacter && !showAnswer.value) {
         valueInput.value = ''
-        displayHelp.value = true
+        showAnswer.value = true
     }
 
     if (expected.value != '' && normalizedInput == normalizedExpected) {
@@ -67,12 +69,10 @@ function onInput(input: InputEvent) {
             timeReaction = new Date().getTime() - startTime
         }
     }
-
-
 }
 
 function resetInput() {
-    displayHelp.value = false
+    showAnswer.value = false
     valueInput.value = ''
     timeReaction = -1
 }
@@ -82,12 +82,17 @@ function setExpected(value: string) {
     expected.value = value
     resetInput()
     startTime = new Date().getTime()
+    if (helpTimeout) {
+        clearTimeout(helpTimeout)
+    }
+    showHelp.value = false
+    helpTimeout = setTimeout(() => showHelp.value = true, 5000)
 }
 
 function sendAnswer() {
     const data: InputData = {
         answer: expected.value,
-        valid: !displayHelp.value,
+        valid: !showAnswer.value,
         timeReaction: timeReaction,
         timeTotal: new Date().getTime() - startTime
     }
