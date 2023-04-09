@@ -73,6 +73,10 @@ function onInput(input: InputEvent) {
 
 function resetInput() {
     showAnswer.value = false
+    showHelp.value = false
+    if (helpTimeout) {
+        clearTimeout(helpTimeout)
+    }
     valueInput.value = ''
     timeReaction = -1
 }
