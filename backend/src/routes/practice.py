@@ -25,7 +25,6 @@ def update(region: str):
     if not request.json:
         return 'unvalid paramters'
     params = request.json.get('params')
-    print(params)
     data = PracticeGrade.update_grades(id_user, region, params)
     return data
 
