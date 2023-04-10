@@ -90,7 +90,9 @@ function setExpected(value: string) {
         clearTimeout(helpTimeout)
     }
     showHelp.value = false
-    helpTimeout = setTimeout(() => showHelp.value = true, 5000)
+    if (value != '') {
+        helpTimeout = setTimeout(() => showHelp.value = true, 5000)
+    }
 }
 
 function sendAnswer() {
