@@ -1,3 +1,4 @@
+import time
 from client import client
 from model import Geo
 
@@ -70,7 +71,7 @@ class PracticeGrade:
     
     @staticmethod
     def get_progress_from_grades(grades: dict) -> int:
-        scores = [grade['score'] for grade in grades.values() if grade['score'] >= 80]
+        scores = [grade['score'] for grade in grades.values() if grade['score'] >= 50]
         if len(scores) == len(grades):
             return -1
         return len(scores)
@@ -79,24 +80,39 @@ class PracticeGrade:
     @staticmethod
     def update_grades(id_user: str, region: str, data: list[dict]):
         # data = [{'country': 'France', 'reaction': 823, 'typing': 300}]
+        t1 = time.perf_counter()
         grades = PracticeGrade.get_grades(id_user, region)
+        t2 = time.perf_counter()
 
         for entry in data:
             current_rating = grades[entry['country']]
             grades[entry['country']] = PracticeGrade.get_new_grades(current_rating, entry)
-            
+        t3 = time.perf_counter()
         PracticeGrade.set_grades(id_user, region, grades)
-        return PracticeGrade.get_data(id_user, region)
+        t4 = time.perf_counter()
+        data = PracticeGrade.get_data(id_user, region)
+        t5 = time.perf_counter()
+        print('upade grades = ', t4 - t1)
+        print('--get grades = ', t2 - t1)
+        print('--get_new_grades = ', t3 - t2)
+        print('--set_grades = ', t4 - t3)
+        print('--get_data = ', t5 - t4)
+        return data
     
     @staticmethod
     def get_new_grades(current_rating: dict, entry: dict):
+
+        if not entry['valid']:
+            entry['reaction'] = 10000
+            entry['typing'] = 0
+        entry['reaction'] = min(entry['reaction'], 10000)
+
         if current_rating['count'] == 0:
-            return {
-                'count': 1,
-                'typing': entry['typing'],
-                'reaction': entry['reaction'],
-                'score': int(PracticeGrade.calculate_score(entry['reaction'], entry['typing']) / 5)
-                }
+            count = 1
+            typing = entry['typing']
+            reaction = entry['reaction']
+            score = int(PracticeGrade.calculate_score(reaction, typing) / 5)
+            return {'count': count, 'typing': typing, 'reaction': reaction, 'score': score}
 
         if current_rating['count'] < 10:
             count = current_rating['count'] + 1

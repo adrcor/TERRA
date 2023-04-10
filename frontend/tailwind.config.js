@@ -18,11 +18,10 @@ module.exports = {
         "on-secondary": "#000000",
         "on-background": "#ffffff",
         "on-error": "#000000",
-        "gr-20": "#cf6679",
-        "gr-40": "#b6847e",
-        "gr-60": "#9ea383",
-        "gr-80": "#86c288",
-        "gr-100": "#6ee18e",
+        "gr-25": "#cf6679",
+        "gr-50": "#b6847e",
+        "gr-75": "#9ea383",
+        "gr-100": "#86c288",
       },
       fontFamily: {
         'sans': ['Quicksand', ...defaultTheme.fontFamily.sans]

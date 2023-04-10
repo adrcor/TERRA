@@ -3,8 +3,9 @@ import type { PracticeData, Geo } from "@/models"
 export function getQueryList(practiceData: PracticeData[]): Geo[] {
 
     const targetLength = 10
-    const validScore = 80
+    const validScore = 50
     const minDistQuery = 3
+    const minWeight = 5
     
     const unlocked: Geo[] = practiceData
         .filter(obj => obj.unlocked)
@@ -12,7 +13,7 @@ export function getQueryList(practiceData: PracticeData[]): Geo[] {
 
     const weightUnlocked: number[] = practiceData
         .filter(obj => obj.unlocked)
-        .map(obj => Math.max((100 - obj.grades.score), 1))
+        .map(obj => Math.max((100 - obj.grades.score), minWeight))
 
     const mandatory: Geo[] = shuffle(practiceData
         .filter(obj => obj.unlocked && obj.grades.score < validScore)

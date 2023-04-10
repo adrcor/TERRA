@@ -3,11 +3,11 @@
         <div @mouseover="hovered = true" @mouseleave="hovered = false" class="py-1 w-6 text-sm text-center select-none"
         :class="{
             'bg-gray-500 bg-opacity-40': !data.unlocked,
-            'bg-gr-20': data.unlocked && data.grades.score < 20,
-            'bg-gr-40': data.unlocked && data.grades.score >= 20 && data.grades.score < 40,
-            'bg-gr-60': data.unlocked && data.grades.score >= 40 && data.grades.score < 60,
-            'bg-gr-80': data.unlocked && data.grades.score >= 60 && data.grades.score < 80,
-            'bg-gr-100': data.unlocked && data.grades.score >= 80 && data.grades.score <= 100
+            'bg-gr-25': data.unlocked && data.grades.score < 25,
+            'bg-gr-50': data.unlocked && data.grades.score >= 25 && data.grades.score < 50,
+            'bg-gr-75': data.unlocked && data.grades.score >= 50 && data.grades.score < 75,
+            'bg-gr-100': data.unlocked && data.grades.score >= 75 && data.grades.score < 100,
+            'bg-secondary': data.unlocked && data.grades.score == 100
         }">
         {{data.code}}
         </div>
