@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import UserInput from './UserInput.vue'
+import UserInput from '../widgets/UserInput.vue'
 import type { GeoRegion, TestMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
 import { getTestQueryList } from '@/composables/testQuery';
