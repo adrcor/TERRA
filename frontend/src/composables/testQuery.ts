@@ -3,7 +3,6 @@ import type { GeoRegion } from "@/models"
 
 export function getTestQueryList(queryData: GeoRegion[], length: number) {
     // Set queryList as a list of random Object from queryData
-
     var minDistQuery = 5
     // minDistQuery can't be higher than the number of possible query
     if (queryData.length <= minDistQuery) {
@@ -14,10 +13,10 @@ export function getTestQueryList(queryData: GeoRegion[], length: number) {
     const buffer: number[] = []
 
     while (queryList.length < length) {
-        var newIndex = getRandomIndex(length)
+        var newIndex = getRandomIndex(queryData.length)
         while (buffer.includes(newIndex)) {
             // Redraw new value if already in buffer
-            newIndex = getRandomIndex(length)
+            newIndex = getRandomIndex(queryData.length)
         }
         queryList.push(queryData[newIndex])
         buffer.push(newIndex)
