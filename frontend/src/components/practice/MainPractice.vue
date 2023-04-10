@@ -8,7 +8,6 @@ import { ref } from 'vue'
 import UserInput from '../widgets/UserInput.vue';
 import type { PracticeData, PracticeHisto, Region } from '@/models'
 import type { Geo } from '@/models'
-import { api } from '@/api';
 import { getPracticeQueryList } from '@/composables/practiceQuery';
 
 var launchRunning = false

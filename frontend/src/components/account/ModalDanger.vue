@@ -40,7 +40,6 @@ function onYes() {
 }
 
 function onNo() {
-    console.log('on no')
     emits('on-close')
 }
 
