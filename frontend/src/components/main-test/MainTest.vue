@@ -16,32 +16,25 @@ import { getTestQueryList } from '@/composables/testQuery';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
 
-var queryData: GeoRegion[] = []
 var queryList: GeoRegion[] = []
 
 var launchRunning: boolean = false
 var testRunning: boolean = false
 
-var startTime: number = -1
 var histo: InputData[] = []
+var startTime: number = -1
 var score: number = 0
 var error: number = 0
 
+// Avoid text flashing when tabing from the end-test review
 const easeIn = ref<boolean>(false)
 setTimeout(() => easeIn.value = true, 10)
 
 const query = ref<string>('Press Tab to start')
 
-const testData: TestData = {
-    result: {
-        time: 0,
-        score: 0,
-        speed: 0
-    },
-    param: {
-        region: '',
-        length: 0
-    }
+var testParam: TestParam = {
+    region: '',
+    length: 0
 }
 
 const metrics = ref<TestMetrics>({
@@ -60,7 +53,6 @@ defineExpose({
     resetTest,
     launchTest
 })
-
 
 function updateQuery() {
     const newQuery = queryList.shift()
@@ -90,14 +82,13 @@ function updateMetrics() {
     }
 }
 
-function launchTest(data: GeoRegion[], testParam: TestParam): void {
+function launchTest(data: GeoRegion[], param: TestParam) {
     if (launchRunning) {
         return
     }
     launchRunning = true
 
-    queryData = data
-    testData.param = testParam
+    testParam = param
     metrics.value.length = testParam.length
     
     queryList = getTestQueryList(data, testParam.length)
@@ -117,7 +108,7 @@ function startTest() {
     updateMetrics()
 }
 
-function resetTest(): void {
+function resetTest() {
     if (launchRunning) {
         return
     }
@@ -127,6 +118,7 @@ function resetTest(): void {
     metrics.value.answer = 0
     metrics.value.accuracy = 0
     metrics.value.speed = 0
+    metrics.value.length = 0
 
     histo = []
     score = 0
@@ -151,8 +143,13 @@ function emitData() {
         score: score,
         speed: Math.floor(score / testTime * 60000000)
     }
-    testData.result = testResult
-    emits('end-test', testData, histo)
+    
+    const out: TestData = {
+        result: testResult,
+        param: testParam
+    }
+
+    emits('end-test', out, histo)
 }
 
 function onAnswer(inputData: InputData) {
