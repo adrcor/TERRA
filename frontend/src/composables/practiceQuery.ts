@@ -1,6 +1,6 @@
 import type { PracticeData, Geo } from "@/models"
 
-export function getQueryList(practiceData: PracticeData[]): Geo[] {
+export function getPracticeQueryList(practiceData: PracticeData[]): Geo[] {
 
     const targetLength = 10
     const validScore = 50

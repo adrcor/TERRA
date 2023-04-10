@@ -9,7 +9,7 @@ import UserInput from '../main-test/UserInput.vue';
 import type { PracticeData, PracticeHisto, Region } from '@/models'
 import type { Geo } from '@/models'
 import { api } from '@/api';
-import { getQueryList } from '@/composables/practiceQuery';
+import { getPracticeQueryList } from '@/composables/practiceQuery';
 
 var launchRunning = false
 var practiceRunning = false
@@ -37,7 +37,7 @@ function launchTest(data: PracticeData[] | null, r: Region): void {
     }
     launchRunning = true
     region = r
-    queryList = getQueryList(data)
+    queryList = getPracticeQueryList(data)
 
     query.value = '3'
     setTimeout(() => query.value = '2', 500)

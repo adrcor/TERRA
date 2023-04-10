@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-4 items-center transition-opacity duration-75"
         :class="easeIn ? 'opacity-100' : 'opacity-0'">
         <MetricsDisplay :metrics="metrics" />
-        <h1 class="text-2xl text-on-background">{{ query }}</h1>
+        <a class="text-2xl text-on-background">{{ query }}</a>
         <UserInput ref="refUserInput" @answer="onAnswer" />
     </div>
 </template>
@@ -12,6 +12,7 @@ import { ref } from 'vue'
 import UserInput from './UserInput.vue'
 import type { GeoRegion, TestMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue';
+import { getTestQueryList } from '@/composables/testQuery';
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
 
@@ -61,37 +62,6 @@ defineExpose({
 })
 
 
-function getRandomIndex() {
-    // Return random index of queryData
-    return queryData.length * Math.random() << 0
-}
-
-function setQueryList() {
-    // Set queryList as a list of random Object from queryData
-
-    var minDistQuery = 5
-    // minDistQuery can't be higher than the number of possible query
-    if (queryData.length <= minDistQuery) {
-        minDistQuery = queryData.length - 1
-    }
-
-    queryList = []
-    const buffer: number[] = []
-
-    while (queryList.length < metrics.value.length) {
-        var newIndex = getRandomIndex()
-        while (buffer.includes(newIndex)) {
-            // Redraw new value if already in buffer
-            newIndex = getRandomIndex()
-        }
-        queryList.push(queryData[newIndex])
-        buffer.push(newIndex)
-        if (buffer.length > minDistQuery) {
-            buffer.shift()
-        }
-    }
-}
-
 function updateQuery() {
     const newQuery = queryList.shift()
     if (newQuery == undefined) {
@@ -129,10 +99,10 @@ function launchTest(data: GeoRegion[], testParam: TestParam): void {
     queryData = data
     testData.param = testParam
     metrics.value.length = testParam.length
+    
+    queryList = getTestQueryList(data, testParam.length)
 
     query.value = '3'
-    setQueryList()
-
     setTimeout(() => query.value = '2', 500)
     setTimeout(() => query.value = '1', 1000)
     setTimeout(startTest, 1500)
