@@ -1,6 +1,7 @@
 import time
 from client import client
 from model import Geo
+from typing import Any
 
 class PracticeProgress:
     
@@ -30,7 +31,7 @@ class PracticeGrade:
 
     @staticmethod
     def init_grades(id_user: str, region: str):
-        countries = [dic['country'] for dic in Geo.get_by_region(region)]
+        countries = [dic.country for dic in Geo.get_by_region(region)]
         response = client.table('practice_grade').upsert({
             'id_user': id_user,
             region: {country: {'count': 0, 'reaction': 0, 'typing': 0, 'score': 0} for country in countries}
@@ -56,7 +57,7 @@ class PracticeGrade:
     @staticmethod
     def get_data(id_user: str, region: str):
 
-        data = Geo.get_by_region(region)
+        data: list[dict[str, Any]] = [obj.to_dict() for obj in Geo.get_by_region(region)]
         progress = PracticeProgress.get_progress(id_user, region)
         grades = PracticeGrade.get_grades(id_user, region)
 
