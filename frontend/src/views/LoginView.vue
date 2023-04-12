@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center gap-6 p-12 rounded-xl bg-overlay bg-opacity-5 w-2/3 max-w-md">
+    <div class="flex flex-col items-center gap-6 p-12 rounded-xl bg-overlay bg-opacity-5 w-2/3 max-w-md mb-auto">
         <h1 class="text-on-background text-3xl self-center">
             Welcome Back
         </h1>
