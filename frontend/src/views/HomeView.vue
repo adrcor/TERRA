@@ -1,9 +1,9 @@
 <template>
-  <div v-if="!store.state.global.endTestScreen" class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4">
+  <div v-if="!store.state.global.endTestScreen" class="flex flex-col flex-1 p-2 mb-8 justify-center items-center gap-4">
     <Filters />
     <MainTest ref="refMainTest" @end-test="onEndTest" />
   </div>
-  <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-16">
+  <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-8">
     <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore" :state-higscore="reviewStateHighscore"/>
   </div>
 </template>
