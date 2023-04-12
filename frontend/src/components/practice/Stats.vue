@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row text-on-background opacity-60 rounded-md p-2 gap-4">
+    <div class="flex flex-row text-on-background opacity-60 rounded-md p-2 gap-4 text-xl">
         <a>{{ mean.toFixed(1) }}%</a>
         <a>{{ (typing / 5).toFixed(0) }}wpm</a>
         <a>{{ reaction.toFixed(0) }}ms</a>

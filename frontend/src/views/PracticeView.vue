@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col flex-1 p-2 mb-16 justify-center items-center gap-4 w-2/3">
+    <div class="flex flex-col flex-1 p-2 mb-4 justify-center items-center gap-4 w-2/3">
         <div class="flex flex-col flex-1 items-center gap-2 h-fit justify-end">
             <PracticeFilter @filter-update="onFilterUpdate"/>
             <Grades :data="data" :region="region"/>
@@ -8,7 +8,7 @@
             <Stats :data="data"/>
             <MainPractice ref="refMainPractice" @end-test="onEndTest"/>
         </div>
-        <div class="flex-1"></div>
+        <div class="flex-1 w-2"></div>
     </div>
 </template>
 
