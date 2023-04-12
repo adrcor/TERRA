@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center gap-4 p-12 rounded-xl bg-overlay bg-opacity-5 w-2/3 max-w-md">
+    <div class="flex flex-col items-center gap-6 p-12 rounded-xl bg-overlay bg-opacity-5 w-2/3 max-w-md">
         <h1 class="text-on-background text-3xl self-center">
             Welcome Back
         </h1>
@@ -44,8 +44,13 @@
             </div>
 
             <button type="submit" :disabled="disabled"
-                    class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Login</button>
+                    class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Sign In</button>
         </form>
+        
+        <button class="flex flex-row items-center justify-center gap-3 w-full py-1 rounded-md text-on-overlay bg-overlay bg-opacity-80" @click="onGoogleAuth">
+            <img class="w-4 h-4" src="src/assets/logo/google_g.svg"/>
+            <a>Sign In with Google</a>
+        </button>
 
         <a class="text-error">{{ errorText }}</a>
 
@@ -84,8 +89,13 @@ async function onLogin() {
         return
     }
     disabled.value = false
-    router.push({ name: 'account' })
+    router.push({ name: 'home' })
 }
 
+async function onGoogleAuth () {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google'
+    })
+}
 
 </script>

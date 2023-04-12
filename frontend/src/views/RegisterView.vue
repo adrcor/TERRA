@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center gap-4 p-12 rounded-xl bg-overlay bg-opacity-5 w-2/3 max-w-md">
+    <div class="flex flex-col items-center gap-6 p-12 rounded-xl bg-overlay bg-opacity-5 w-2/3 max-w-md">
         <h1 class="text-on-background text-3xl self-center">
             Welcome
         </h1>
@@ -68,15 +68,22 @@
 
                 </button>
             </div>
+        
+
 
             <button type="submit" :disabled="disabled"
                 class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Register</button>
         </form>
 
+        <button class="flex flex-row items-center justify-center gap-3 w-full py-1 rounded-md text-on-overlay bg-overlay bg-opacity-80" @click="onGoogleAuth">
+            <img class="w-4 h-4" src="src/assets/logo/google_g.svg"/>
+            <a>Register with Google</a>
+        </button>
+
         <a class="text-error">{{ errorText }}</a>
 
         <router-link to="login" class="text-primary self-end opacity-60 hover:opacity-100 active:opacity-60">
-            Login now
+            Sign In now
         </router-link>
     </div>
 </template>
@@ -125,5 +132,10 @@ async function onRegister() {
     router.push({ name: 'account' })
 }
 
+async function onGoogleAuth() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google'
+    })
+}
 
 </script>
