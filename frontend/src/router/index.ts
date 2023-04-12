@@ -6,9 +6,14 @@ import AccountView from '@/views/AccountView.vue'
 import { isAuthenticated } from '@/supabase'
 import PracticeView from '@/views/PracticeView.vue'
 import PrivacyView from '@/views/PrivacyView.vue'
+import TermsView from '@/views/TermsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    // always scroll to top
+    return { top: 0 }
+  },
   routes: [
     {
       path: '/',
@@ -70,6 +75,11 @@ const router = createRouter({
       path: '/privacy-policy',
       name: 'privacy',
       component: PrivacyView
+    },
+    {
+      path: '/terms-and-conditions',
+      name: 'terms',
+      component: TermsView
     },
   ]
 })

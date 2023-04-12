@@ -4,5 +4,6 @@
         <a>&lt;Twitter&gt;</a>
         <a>&lt;Contact&gt;</a>
         <router-link to="privacy-policy">&lt;Privacy Policy&gt;</router-link>
+        <router-link to="terms-and-conditions">&lt;Terms and Condition&gt;</router-link>
     </footer>
 </template>
