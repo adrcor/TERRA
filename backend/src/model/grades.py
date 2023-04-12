@@ -75,7 +75,7 @@ class Grades:
 
     @staticmethod
     def get_grades(id_user: str, region: str) -> dict[str, 'Grades']:
-        response = client.table('practice_grade').select(region).execute()
+        response = client.table('practice_grade').select(region).eq('id_user', id_user).execute()
         if not response.data or not response.data[0][region]:
             return Grades.init_grades(id_user, region)
         return {key: Grades(**grades) for key, grades in response.data[0][region].items()}
