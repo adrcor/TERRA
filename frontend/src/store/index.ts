@@ -1,17 +1,16 @@
 import type { InjectionKey } from 'vue'
 import { createStore, useStore as baseUseStore, Store } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import { authStore } from './module/auth'
-import type { AuthState } from './module/auth'
-import { filterStore } from './module/filter'
-import type { FilterState } from './module/filter'
-import { globalStore } from './module/global'
-import type { GlobalState } from './module/global'
+import { authStore, type AuthState } from './module/auth'
+import { filterStore, type FilterState } from './module/filter'
+import { globalStore, type GlobalState } from './module/global'
+import { practiceStore, type PracticeState } from './module/practice'
 
 export interface State {
     auth: AuthState,
     filter: FilterState,
-    global: GlobalState
+    global: GlobalState,
+    practice: PracticeState
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -20,7 +19,8 @@ export const store: Store<State> = createStore({
     modules: {
         auth: authStore,
         filter: filterStore,
-        global: globalStore
+        global: globalStore,
+        practice: practiceStore
     },
     plugins: [createPersistedState()]
 })

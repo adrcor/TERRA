@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col flex-1 p-2 mb-4 justify-center items-center gap-4 w-2/3">
         <div class="flex flex-col flex-1 items-center gap-2 h-fit justify-end">
-            <PracticeFilter @filter-update="onFilterUpdate"/>
-            <Grades :data="data" :region="region"/>
+            <PracticeFilter />
+            <Grades :data="data"/>
         </div>
         <div class="flex flex-col items-center w-full">
             <Stats :data="data"/>
@@ -13,20 +13,23 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { api } from '@/api';
-import PracticeFilter from '@/components/practice/PracticeFilter.vue';
-import Grades from '@/components/practice/Grades.vue';
-import type { PracticeData, PracticeHisto, Region } from '@/models';
-import Stats from '@/components/practice/Stats.vue';
-import MainPractice from '@/components/practice/MainPractice.vue';
+import { onMounted, ref, watch } from 'vue'
+import { api } from '@/api'
+import PracticeFilter from '@/components/practice/PracticeFilter.vue'
+import Grades from '@/components/practice/Grades.vue'
+import type { PracticeData, PracticeHisto, Region } from '@/models'
+import Stats from '@/components/practice/Stats.vue'
+import MainPractice from '@/components/practice/MainPractice.vue'
+import { useStore } from '@/store'
 
 onMounted(() => {
     updateData()
     addEventListener('keydown', eventListener)
 })
 
-const region = ref<Region>('AF')
+const store = useStore()
+
+const region = ref<Region>(store.state.practice.region)
 const data = ref<PracticeData[] | null>(null)
 
 const refMainPractice = ref<InstanceType<typeof MainPractice>>()
@@ -42,26 +45,24 @@ function eventListener(event: KeyboardEvent) {
     }
 }
 
+watch(() => store.state.practice.region, updateData)
+
 function onTab() {
     if (!data) {
         return
     }
     refMainPractice.value?.resetTest()
-    refMainPractice.value?.launchTest(data.value, region.value)
+    refMainPractice.value?.launchTest(data.value, store.state.practice.region)
 }
 
 function onEscape() {
     refMainPractice.value?.resetTest()
 }
 
-function onFilterUpdate(r: Region) {
-    region.value = r
-    updateData()
-}
 
 async function updateData() {
     data.value = null
-    const response = await api.get(`practice/data/${region.value}`)
+    const response = await api.get(`practice/data/${store.state.practice.region}`)
     data.value = response.data
 }
 

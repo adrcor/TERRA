@@ -8,12 +8,14 @@
 <script setup lang="ts">
 import type { PracticeData, Region } from '@/models'
 import GradeCase from './GradeCase.vue'
-import { computed } from 'vue';
+import { computed } from 'vue'
+import { useStore } from '@/store'
 
 const props = defineProps<{
-    data: PracticeData[] | null,
-    region: Region
+    data: PracticeData[] | null
 }>()
+
+const store = useStore()
 
 type RegionDic = {
     [key in Region]: number
@@ -22,7 +24,7 @@ type RegionDic = {
 const regionLength: RegionDic = {World: -1, AF: 54, AS: 48, EU: 45, NA: 23, OC: 14, SA: 12}
 
 const nCase = computed(() => {
-    return Array(regionLength[props.region]).fill(0)
+    return Array(regionLength[store.state.practice.region]).fill(0)
 })
 
 const test = Array(50).fill(0)

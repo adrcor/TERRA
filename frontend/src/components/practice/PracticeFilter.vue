@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-row gap-3 items-center">
-        <Dropdown :default="regionOptions[0]" :options="regionOptions" @on-update="onUpdateRegion">
+        <Dropdown :default="store.state.practice.region" :options="regionOptions" @on-update="onUpdateRegion">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                 class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -12,15 +12,15 @@
 
 <script setup lang="ts">
 import Dropdown from '@/components/widgets/Dropdown.vue'
+import { useStore } from '@/store'
 
-const emits = defineEmits([
-    'filter-update'
-])
+const store = useStore()
+
 
 const regionOptions = ['AF', 'AS', 'EU', 'NA', 'OC', 'SA']
 
 function onUpdateRegion(value: string) {
-    emits('filter-update', value)
+    store.commit('practice/set_region', value)
 }
 
 </script>
