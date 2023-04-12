@@ -75,8 +75,8 @@
                 class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Register</button>
         </form>
 
-        <button class="flex flex-row items-center justify-center gap-3 w-full py-1 rounded-md text-on-overlay bg-overlay bg-opacity-80" @click="onGoogleAuth">
-            <img class="w-4 h-4" src="src/assets/logo/google_g.svg"/>
+        <button class="flex flex-row items-center justify-center gap-3 w-full py-1 rounded-md text-on-overlay bg-overlay bg-opacity-90 hover:bg-opacity-70 active:bg-opacity-50" @click="onGoogleAuth">
+            <img class="w-4 h-4" src="@/assets/logo/google_g.svg"/>
             <a>Register with Google</a>
         </button>
 
