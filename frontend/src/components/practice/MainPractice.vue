@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UserInput from '../widgets/UserInput.vue';
-import type { PracticeData, PracticeHisto, Region } from '@/models'
+import type { PracticeData, PracticeHisto, Region, InputData } from '@/models'
 import type { Geo } from '@/models'
 import { getPracticeQueryList } from '@/composables/practiceQuery';
 
@@ -75,7 +75,7 @@ function updateQuery() {
     refUserInput.value?.setExpected(newQuery.capital)
 }
 
-function onAnswer(inputData: any) {
+function onAnswer(inputData: InputData) {
     const typingTime = inputData.timeTotal - inputData.timeReaction
     const msPerChar = typingTime / inputData.answer.length
     const charPerMin = Math.floor(60000 / msPerChar)
