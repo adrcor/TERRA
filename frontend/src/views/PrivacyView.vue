@@ -3,9 +3,9 @@
         <div class="flex flex-col gap-2">
             <h1 class="text-primary text-3xl underline text-center pb-4">Privacy Policy</h1>
             
-            <p>TerraTrivia operates the <a href="https://www.terratrivia.app" class="text-primary text-opacity-60">terratrivia.app</a> website.</p>
+            <p>Terra Trivia operates the <a href="https://www.terratrivia.app" class="text-primary text-opacity-60">terratrivia.app</a> website.</p>
             
-            <p>This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the TerraTrivia website.</p>
+            <p>This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service, the Terra Trivia website.</p>
             
             <p>If you choose to use our Service, then you agree to the collection and use of information in relation with this policy. The Personal Information that we collect are used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy.</p>
             
