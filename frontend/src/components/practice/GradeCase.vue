@@ -7,7 +7,7 @@
             'bg-gr-50': data.unlocked && data.grades.score >= 25 && data.grades.score < 50,
             'bg-gr-75': data.unlocked && data.grades.score >= 50 && data.grades.score < 75,
             'bg-gr-100': data.unlocked && data.grades.score >= 75 && data.grades.score < 100,
-            'bg-secondary': data.unlocked && data.grades.score == 100
+            'bg-valid': data.unlocked && data.grades.score == 100
         }">
         {{data.code}}
         </div>

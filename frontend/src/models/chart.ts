@@ -1,7 +1,8 @@
 export const Color = {
-    primary: '#6eb1e1',
-    secondary: '#6ee18e',
-    error: '#cf6679',
+    primary: '#60b0f0',
+    secondary: '#70e090',
+    valid: "#70e090",
+    error: '#d06090',
     background: '#121212',
     white: '#ffffff',
     black: '#000000',
@@ -14,10 +15,10 @@ export const Color = {
 
 export const Gradient = {
     gr20: Color.error,
-    gr40: rgbToHex(Array.from(Array(3).keys()).map(index => Math.floor(hexToRgb(Color.error)[index] * .75 + hexToRgb(Color.secondary)[index] * .25))),
-    gr60: rgbToHex(Array.from(Array(3).keys()).map(index => Math.floor(hexToRgb(Color.error)[index] * .50 + hexToRgb(Color.secondary)[index] * .50))),
-    gr80: rgbToHex(Array.from(Array(3).keys()).map(index => Math.floor(hexToRgb(Color.error)[index] * .25 + hexToRgb(Color.secondary)[index] * .75))),
-    gr100: Color.secondary
+    gr40: rgbToHex(Array.from(Array(3).keys()).map(index => Math.floor(hexToRgb(Color.error)[index] * .75 + hexToRgb(Color.valid)[index] * .25))),
+    gr60: rgbToHex(Array.from(Array(3).keys()).map(index => Math.floor(hexToRgb(Color.error)[index] * .50 + hexToRgb(Color.valid)[index] * .50))),
+    gr80: rgbToHex(Array.from(Array(3).keys()).map(index => Math.floor(hexToRgb(Color.error)[index] * .25 + hexToRgb(Color.valid)[index] * .75))),
+    gr100: Color.valid
 }
 
 function hexToRgb(hex: string) {

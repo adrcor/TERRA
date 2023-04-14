@@ -1,10 +1,11 @@
 
 export default {
-    primary: "#6eb1e1",
-    secondary: "#6ee18e",
+    primary: "#60b0f0",
+    secondary: "#60f0d0",
     background: "#121212",
     overlay: "#ffffff",
-    error: "#cf6679",
+    valid: "#70e090",
+    error: "#d06090",
     onPrimary: "#000000",
     onSecondary: "#000000",
     onBackground: "#ffffff",
