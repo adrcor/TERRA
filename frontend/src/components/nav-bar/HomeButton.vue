@@ -1,6 +1,6 @@
 <template>
     <button @click="onClick" class="text-primary text-3xl flex flex-row items-center opacity-80 hover:opacity-100 active:opacity-80">
-        <img src="@/assets/logo/terra-logo.svg" class="w-12 h-12"/>
+        <img src="@/assets/icons/color/terra-logo.svg" class="w-12 h-12"/>
         <a>TerraTrivia</a>
     </button>
 </template>

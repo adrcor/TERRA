@@ -46,7 +46,7 @@
         </form>
 
         <button class="flex flex-row items-center justify-center gap-3 w-full py-1 rounded-md text-on-overlay bg-overlay bg-opacity-90 hover:bg-opacity-70 active:bg-opacity-50" @click="onGoogleAuth">
-            <img class="w-4 h-4" src="@/assets/logo/google_g.svg"/>
+            <img class="w-4 h-4" src="@/assets/icons/color/google.svg"/>
             <a>Register with Google</a>
         </button>
 
