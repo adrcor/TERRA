@@ -7,20 +7,20 @@
 
             <div
                 class="flex flex-row w-full items-center gap-1 rounded-md px-2 py-1 bg-overlay bg-opacity-5 text-on-background">
-                <img src="@/assets/icons/arobase.svg" class="w-6 h-6">
+                <img src="@/assets/icons/line/arobase.svg" class="w-6 h-6">
                 <input v-model="formLogin.email" type="text" placeholder="Email"
                     class="bg-transparent w-full focus:outline-none" />
             </div>
 
             <div
                 class="flex flex-row items-center w-full gap-1 rounded-md px-2 py-1 bg-overlay bg-opacity-5 text-on-background">
-                <img src="@/assets/icons/lock.svg" class="w-6 h-6 flex-shrink-0"/>
+                <img src="@/assets/icons/line/lock.svg" class="w-6 h-6 flex-shrink-0"/>
                 <input v-model="formLogin.password" :type="showPassword ? 'text' : 'password'" placeholder="Password"
                     class="bg-transparent w-full focus:outline-none" />
                 <button type="button" tabindex="-1" @click="showPassword = !showPassword"
                     class="opacity-60 hover:opacity-100">
-                    <img v-if="!showPassword" src="@/assets/icons/show.svg" class="w-6 h-6">
-                    <img v-if="showPassword" src="@/assets/icons/show-crossed.svg" class="w-6 h-6">
+                    <img v-if="!showPassword" src="@/assets/icons/line/show.svg" class="w-6 h-6">
+                    <img v-if="showPassword" src="@/assets/icons/line/show-crossed.svg" class="w-6 h-6">
                     
 
                 </button>

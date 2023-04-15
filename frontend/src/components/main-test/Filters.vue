@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-row gap-3 w-fit items-center">
         <Dropdown :default="store.state.filter.region" :options="regionOptions" @on-update="onUpdateRegion">
-            <img src="@/assets/icons/globe.svg" />
+            <img src="@/assets/icons/line/globe.svg" />
         </Dropdown>
 
         <Dropdown :default="store.state.filter.length" :options="lengthOptions" @on-update="onUpdateLength">
-            <img src="@/assets/icons/chart-bar.svg" />
+            <img src="@/assets/icons/line/chart-bar.svg" />
         </Dropdown>
     </div>
 </template>

@@ -3,12 +3,12 @@
          <HomeButton />
 
         <router-link to="/practice" class="flex flex-row gap-2 text-on-background opacity-60 hover:opacity-100">
-            <img src="@/assets/icons/practice.svg" class="w-6 h-6"/>
+            <img src="@/assets/icons/solid/practice.svg" class="w-6 h-6"/>
             <a>Practice</a>
         </router-link>
 
         <router-link to="/about" class="flex flex-row gap-2 text-on-background opacity-60 hover:opacity-100">
-            <img src="@/assets/icons/info.svg" class="w-6 h-6"/>
+            <img src="@/assets/icons/solid/info.svg" class="w-6 h-6"/>
             <a>About</a>
         </router-link>
 
