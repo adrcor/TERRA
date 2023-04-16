@@ -2,9 +2,16 @@
   <div v-if="!store.state.global.endTestScreen" class="flex flex-col flex-1 p-2 mb-8 justify-center items-center gap-4">
     <Filters />
     <MainTest ref="refMainTest" @end-test="onEndTest" />
+    <button class="w-6 h-6 opacity-40" @click="onTab">
+      <img v-if="!store.state.global.testRunning" src="@/assets/icons/solid/play.svg"/>
+      <img v-if="store.state.global.testRunning" src="@/assets/icons/line/reset.svg"/>
+    </button>
   </div>
-  <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-8">
+  <div v-if="store.state.global.endTestScreen" class="flex flex-col flex-1 justify-center p-2 mb-8 items-center gap-4">
     <TestReview :data="reviewData" :histo="reviewHisto" :highscore="reviewHighscore" :state-higscore="reviewStateHighscore"/>
+    <button class="w-6 h-6" @click="onTab" :class="{ 'opacity-0': store.state.global.testRunning, 'opacity-40': !store.state.global.testRunning }">
+      <img src="@/assets/icons/line/reset.svg"/>
+    </button>
   </div>
 </template>
 
@@ -49,9 +56,13 @@ onMounted(() => {
   setData()
   addEventListener('keydown', eventListener)
   store.commit('global/setEndTestScreen', false)
+  store.commit("global/setTestRunning", false)
 })
 
-onUnmounted(() => removeEventListener('keydown', eventListener))
+onUnmounted(() => {
+  removeEventListener('keydown', eventListener)
+  store.commit("global/setTestRunning", false)
+})
 
 function eventListener(event: KeyboardEvent) {
   if (event.key == 'Tab') {
@@ -71,6 +82,7 @@ async function setData() {
 
 async function onTab() {
   store.commit("global/setEndTestScreen", false)
+  store.commit("global/setTestRunning", true)
 
   // wait until data and mainTest are loaded
   if (data.length == 0 || refMainTest.value == null) {
@@ -99,6 +111,7 @@ async function onEscape() {
       }
     }
   }
+  store.commit("global/setTestRunning", false)
   store.commit("global/setEndTestScreen", false)
   refMainTest.value?.resetTest()
 }
@@ -108,6 +121,7 @@ function onEndTest(testData: TestData, histo: InputData[]) {
   reviewData.value = testData
   reviewHisto.value = histo
   store.commit("global/setEndTestScreen", true)
+  store.commit("global/setTestRunning", false)
   afterEndTest(testData)
 }
 

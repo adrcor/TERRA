@@ -11,8 +11,8 @@
 import { ref } from 'vue'
 import UserInput from '../widgets/UserInput.vue'
 import type { GeoRegion, TestMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
-import MetricsDisplay from './MetricsDisplay.vue';
-import { getTestQueryList } from '@/composables/testQuery';
+import MetricsDisplay from './MetricsDisplay.vue'
+import { getTestQueryList } from '@/composables/testQuery'
 
 const refUserInput = ref<InstanceType<typeof UserInput>>()
 

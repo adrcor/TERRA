@@ -8,6 +8,9 @@
             <Stats :data="data"/>
             <MainPractice ref="refMainPractice" @end-test="onEndTest"/>
         </div>
+        <button class="w-6 h-6 opacity-40" @click="onTab">
+            <img src="@/assets/icons/solid/play.svg"/>
+        </button>
         <div class="flex-1 w-2"></div>
     </div>
 </template>
@@ -29,7 +32,6 @@ onMounted(() => {
 
 const store = useStore()
 
-const region = ref<Region>(store.state.practice.region)
 const data = ref<PracticeData[] | null>(null)
 
 const refMainPractice = ref<InstanceType<typeof MainPractice>>()
