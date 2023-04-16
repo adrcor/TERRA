@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center text-on-background gap-3">
-        <input ref="refInput" v-model="valueInput" @blur="focus" @input="event => onInput(event as InputEvent)" placeholder="Unfocused"
+        <input ref="refInput" spellcheck="false" v-model="valueInput" @blur="focus" @input="event => onInput(event as InputEvent)" placeholder="Unfocused"
             class="text-center text-2xl bg-transparent outline-none caret-primary focus:placeholder-transparent placeholder-on-background placeholder-opacity-60" />
         <h1 v-if="!showAnswer" class="h-4 transition-opacity duration-1000" :class="{'opacity-60': showHelp, 'opacity-0': !showHelp}">Press / to show the answer</h1>
         <h1 v-else="" class="h-4 opacity-100">{{ expected }}</h1>
