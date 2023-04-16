@@ -3,18 +3,19 @@
         :class="easeIn ? 'opacity-100' : 'opacity-0'">
         <MetricsDisplay :metrics="metrics" />
         <a class="text-2xl text-on-background">{{ query }}</a>
-        <UserInput ref="refUserInput" @answer="onAnswer" />
+        <NewUserInput ref="refUserInput" @answer="onAnswer" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import UserInput from '../widgets/UserInput.vue'
+//import UserInput from '../widgets/UserInput.vue'
 import type { GeoRegion, TestMetrics, InputData, TestResult, TestData, TestParam } from '@/models';
 import MetricsDisplay from './MetricsDisplay.vue'
 import { getTestQueryList } from '@/composables/testQuery'
+import NewUserInput from '../widgets/newUserInput.vue'
 
-const refUserInput = ref<InstanceType<typeof UserInput>>()
+const refUserInput = ref<InstanceType<typeof NewUserInput>>()
 
 var queryList: GeoRegion[] = []
 
