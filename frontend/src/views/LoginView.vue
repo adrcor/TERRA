@@ -25,6 +25,7 @@
 
                 </button>
             </div>
+            <button type="button" @click="onForgot" class="text-primary text-opacity-60 hover:text-opacity-100 active:text-opacity-80 self-end">Forgot password?</button>
 
             <button type="submit" :disabled="disabled"
                     class="py-1 w-full rounded-md bg-primary hover:opacity-90 active:opacity-50 disabled:opacity-50 text-on-primary">Sign In</button>
@@ -82,6 +83,10 @@ async function onGoogleAuth () {
             redirectTo: window.location.origin
         }
     })
+}
+
+function onForgot() {
+    router.push({ name: 'forgot'})
 }
 
 </script>

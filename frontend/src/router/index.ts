@@ -9,6 +9,7 @@ import PrivacyView from '@/views/PrivacyView.vue'
 import TermsView from '@/views/TermsView.vue'
 import AboutView from '@/views/AboutView.vue'
 import PasswordView from '@/views/PasswordView.vue'
+import ForgotView from '@/views/ForgotView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,18 @@ const router = createRouter({
       }
     },
     {
+      path: '/forgot-password',
+      name: 'forgot',
+      component: ForgotView,
+      beforeEnter: async (to, from) => {
+        if (await isAuthenticated()) {
+          return { name: 'home'}
+        } else {
+          return true
+        }
+      }
+    },
+    {
       path: '/account',
       name: 'account',
       component: AccountView,
@@ -99,7 +112,7 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: AboutView
-    },
+    }
   ]
 })
 
