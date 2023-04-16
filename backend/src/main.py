@@ -12,7 +12,7 @@ from routes.practice import PracticeBlueprint
 load_dotenv('.env')
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": [os.getenv('DOMAIN', '*')]}})
 
 app.debug = os.getenv('ENVIRONMENT') == 'local'
 app.config["JWT_SECRET_KEY"] = os.getenv('SUPABASE_JWT')
