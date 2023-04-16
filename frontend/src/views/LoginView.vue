@@ -64,6 +64,7 @@ const errorText = ref('')
 const disabled = ref(false)
 
 async function onLogin() {
+    console.log(window.location)
     disabled.value = true
     const { data, error } = await supabase.auth.signInWithPassword(formLogin.value)
     if (error) {
@@ -77,7 +78,10 @@ async function onLogin() {
 
 async function onGoogleAuth () {
     const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google'
+        provider: 'google',
+        options: {
+            redirectTo: window.location.origin
+        }
     })
 }
 

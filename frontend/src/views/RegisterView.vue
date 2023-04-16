@@ -104,7 +104,10 @@ async function onRegister() {
 
 async function onGoogleAuth() {
     const { data, error } = await supabase.auth.signInWithOAuth({
-        provider: 'google'
+        provider: 'google',
+        options: {
+            redirectTo: window.location.origin
+        }
     })
 }
 
