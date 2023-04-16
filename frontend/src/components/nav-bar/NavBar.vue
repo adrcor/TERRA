@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row items-center justify-between h-16 w-full px-6 py-12">
+    <div class="flex flex-row items-center justify-between h-16 w-full px-6 py-12 select-none">
          <HomeButton />
 
         <router-link to="/practice" class="flex flex-row gap-2 text-on-background opacity-60 hover:opacity-100">

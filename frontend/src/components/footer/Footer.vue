@@ -1,5 +1,5 @@
 <template>
-    <footer class="flex flex-row text-on-background gap-6 py-3 text-sm">
+    <footer class="flex flex-row text-on-background gap-8 py-3 text-sm select-none">
         <a href="mailto:trivia.terra@gmail.com" class="flex flex-row items-center gap-1 opacity-30 hover:opacity-60 active:opacity-30">
             <img src="@/assets/icons/solid/envelope.svg" class="w-4 h-4"/>
             <p>Contact</p>
