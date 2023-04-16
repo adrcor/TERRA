@@ -3,12 +3,17 @@
         <button @click="showModalTest = true" class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
                        hover:bg-opacity-60 hover:text-on-error hover:text-opacity-100
                        active:bg-opacity-40 active: text-opacit-60">
-            Reset Test Data
+            Reset Tests
         </button>
         <button @click="showModalPractice = true" class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
                         hover:bg-opacity-60 hover:text-on-error hover:text-opacity-100
                         active:bg-opacity-40 active: text-opacit-60">
-            Reset Practice Data
+            Reset Practice
+        </button>
+        <button @click="updatePassword" class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
+                        hover:bg-opacity-60 hover:text-on-error hover:text-opacity-100
+                        active:bg-opacity-40 active: text-opacit-60">
+            Update Password
         </button>
         <button @click="logout" class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
                         hover:bg-opacity-60 hover:text-on-error hover:text-opacity-100
@@ -34,6 +39,10 @@ const showModalPractice = ref(false)
 async function logout() {
     const response = await supabase.auth.signOut()
     router.push({ name: 'login' })
+}
+
+function updatePassword() {
+    router.push({ name: 'password'})
 }
 
 async function resetTest() {

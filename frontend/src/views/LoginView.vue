@@ -64,7 +64,6 @@ const errorText = ref('')
 const disabled = ref(false)
 
 async function onLogin() {
-    console.log(window.location)
     disabled.value = true
     const { data, error } = await supabase.auth.signInWithPassword(formLogin.value)
     if (error) {
