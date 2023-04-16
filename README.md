@@ -5,7 +5,7 @@
 
 ## About
 
-TerraTrivia is a website website designed to help its users learn all the world capitals.
+TerraTrivia is a website designed to help its users learn all the world capitals.
 
 It features a practice mode that utilizes an algorithm to facilitate efficient learning by gradually introducing new capitals and emphasizing the user's weak areas.
 
