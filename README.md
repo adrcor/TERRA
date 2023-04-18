@@ -1,7 +1,7 @@
 
 # TerraTrivia
 
-[![TerraTrivia](https://github.com/AdrCor/TERRA/master/frontend/assets/icons/color/terra.svg)](https://terratrivia.app/)
+[![TerraTrivia](./frontend/src/assets/icons/color/terra.svg)](https://terratrivia.app/)
 
 ## About
 
@@ -16,6 +16,10 @@ Additionally, there is a test mode available where users can assess their knowle
 **Client:** Vue.js, Typescript, TailwindCSS
 
 **Server:** Python, Flask, Supabase, Postgresql
+
+## How to build locally
+
+Refer to [BUILD.md](./BUILD.md).
 
 ## Contact
 
