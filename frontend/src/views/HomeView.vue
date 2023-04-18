@@ -93,6 +93,9 @@ async function onTab() {
       }
     }
   }
+  if (data.length == 0) {
+    return
+  }
   const testParam = { region: store.state.filter.region, length: store.state.filter.length } 
   refMainTest.value?.resetTest()
   refMainTest.value?.launchTest(
