@@ -35,7 +35,7 @@ class Grades:
         
         else:
             self.typing = int((self.typing * 9 + typing) / 10)
-            self.reaction = int((reaction * 9 + reaction) / 10)
+            self.reaction = int((self.reaction * 9 + reaction) / 10)
             self.count += 1
             self.update_score()
 
