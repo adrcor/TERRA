@@ -1,8 +1,10 @@
 
 # TerraTrivia
 
-<p align="center" href="https://terratrivia.app/">
-  <img src="./frontend/src/assets/icons/color/terra.svg" alt="TerraTrivia" width="120"/>
+<p align="center">
+    <a href="https://terratrivia.app/">
+        <img src="./frontend/src/assets/icons/color/terra.svg" alt="TerraTrivia" width="120"/>
+    </a>
 </p>
 
 ## About
