@@ -1,7 +1,7 @@
 
 # TerraTrivia
 
-[<a align="center"><img src="./frontend/src/assets/icons/color/terra.svg" width="120" /></a>](https://terratrivia.app/)
+[<center><img src="./frontend/src/assets/icons/color/terra.svg" width="120" /></center>](https://terratrivia.app/)
 
 ## About
 
