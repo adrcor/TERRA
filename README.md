@@ -2,7 +2,7 @@
 # TerraTrivia
 
 <p align="center">
-  <img src="./frontend/src/assets/icons/color/terra.svg" alt="TerraTrivia" with="120"/>
+  <img src="./frontend/src/assets/icons/color/terra.svg" alt="TerraTrivia" width="120"/>
 </p>
 
 ## About
