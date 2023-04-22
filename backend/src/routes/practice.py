@@ -14,7 +14,6 @@ def data(region: str):
     id_user = get_jwt_identity()
     data = Practice.get_data(id_user, region)
     t2 = time.perf_counter()
-    print('TOTAL DATA TIME: ', t2 - t1)
     return [obj.to_dict() for obj in data]
 
 @PracticeBlueprint.route('/update/<region>', methods=['POST'])
@@ -27,7 +26,6 @@ def update(region: str):
     params = request.json.get('params')
     data = Practice.update(id_user, region, params)
     t2 = time.perf_counter()
-    print('TOTAL UPDATE TIME: ', t2 - t1)
     return [obj.to_dict() for obj in data]
 
 @PracticeBlueprint.route('/delete', methods=['DELETE'])
