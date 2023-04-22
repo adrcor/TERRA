@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from model.geo import Geo
 from model.grades import Grades
 from model.progress import Progress
+import asyncio
 
 @dataclass
 class Practice:
@@ -14,13 +15,22 @@ class Practice:
     
     @staticmethod
     def get_data(id_user: str, region: str) -> list['Practice']:
+        return asyncio.run(Practice.get_data_async(id_user, region))
+    
+    @staticmethod
+    async def get_data_async(id_user: str, region: str) -> list['Practice']:
+        loop = asyncio.get_event_loop()
 
-        geos = Geo.get_by_region(region)
-        progress = Progress.get(id_user, region)
-        grades = Grades.get_grades(id_user, region)
+        task_geos = loop.run_in_executor(None, Geo.get_by_region, region)
+        task_progress = loop.run_in_executor(None, Progress.get, id_user, region)
+        task_grades = loop.run_in_executor(None, Grades.get_grades, id_user, region)
+
+        progress, grades = await asyncio.gather(task_progress, task_grades)
 
         if progress == Grades.get_progress_from_grades(grades):
             progress = Progress.update(id_user, region, progress + 3)
+
+        geos = await task_geos
 
         data: list[Practice] = []
         for index, geo in enumerate(geos):

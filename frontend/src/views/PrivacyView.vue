@@ -1,7 +1,7 @@
 <template>
     <body class="flex flex-col gap-16 w-2/3 text-on-background text-opacity-60 py-8">
         <div class="flex flex-col gap-2">
-            <h1 class="text-primary text-3xl underline text-center pb-4">Privacy Policy</h1>
+            <h1 class="text-primary text-3xl text-center pb-4">Privacy Policy</h1>
             
             <p>TerraTrivia operates the <a href="https://www.terratrivia.app" class="text-primary text-opacity-60">terratrivia.app</a> website.</p>
             

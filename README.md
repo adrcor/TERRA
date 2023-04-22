@@ -1,21 +1,25 @@
 
 # TerraTrivia
 
-[![TerraTrivia](./frontend/src/assets/icons/color/terra.svg)](https://terratrivia.app/)
+<p align="center">
+    <a href="https://terratrivia.app/">
+        <img src="./frontend/src/assets/icons/color/terra.svg" alt="TerraTrivia" width="120"/>
+    </a>
+</p>
 
 ## About
 
 TerraTrivia is a website designed to help its users learn all the world capitals.
 
-It features a practice mode that utilizes an algorithm to facilitate efficient learning by gradually introducing new capitals and emphasizing the user's weak areas.
+It features a practice mode that utilizes an algorithm to facilitate efficient learning by gradually introducing new capitals and focus on the user's weak areas.
 
 Additionally, there is a test mode available where users can assess their knowledge through timed challenges and track their progresses over time.
 
 ## Tech Stack
 
-**Client:** Vue.js, Typescript, TailwindCSS
+**Frontend:** Vue.js, Typescript, TailwindCSS
 
-**Server:** Python, Flask, Supabase, Postgresql
+**Backend:** Python, Flask, Supabase, Postgresql
 
 ## How to build locally
 

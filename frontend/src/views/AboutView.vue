@@ -1,7 +1,7 @@
 <template>
     <body class="flex flex-col gap-16 w-2/3 text-on-background text-opacity-60 py-8">
         
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-12">
             <div class="flex flex-row gap-2 self-center items-center">
                 <img src="@/assets/icons/color/terra.svg" class="w-12 h-12"/>
                 <h1 class="text-primary text-4xl">TerraTrivia</h1>
