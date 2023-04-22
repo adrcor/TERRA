@@ -1,7 +1,7 @@
 <template>
     <body class="flex flex-col gap-16 w-2/3 text-on-background text-opacity-60 py-8">
         <div class="flex flex-col gap-2">
-            <h1 class="text-primary text-3xl text-center pb-4">Terms and Conditions</h1>
+            <h1 class="text-primary text-3xl underline text-center pb-4">Terms and Conditions</h1>
             
             <p>Welcome to TerraTrivia!</p>
             
