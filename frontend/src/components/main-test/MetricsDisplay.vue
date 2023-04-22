@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row text-on-background justify-between text-opacity-60 text-xl gap-8">
+    <div class="flex flex-row text-on-background justify-between text-opacity-60 text-xl w-full">
         <span>{{ metrics.answer }}/{{ metrics.length }}</span>
         <span>{{ Math.floor(metrics.time / 1000) }}s</span>
         <span>{{ Math.round(metrics.accuracy * 100) }}%</span>

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row flex-wrap bg-overlay bg-opacity-5 p-2 rounded-lg gap-2">
+    <div class="flex flex-row bg-overlay bg-opacity-5 p-2 rounded-lg gap-2">
         <button @click="showModalTest = true" class="flex-1 rounded-md p-2 bg-error bg-opacity-5 text-error text-opacity-60 transition-all
                        hover:bg-opacity-60 hover:text-on-error hover:text-opacity-100
                        active:bg-opacity-40 active: text-opacit-60">

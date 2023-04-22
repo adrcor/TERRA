@@ -4,7 +4,7 @@
             <img src="@/assets/icons/solid/envelope.svg" class="w-4 h-4"/>
             <p class="hidden sm:block">Contact</p>
         </a>
-        <a href="https://github.com/adrcor/terra" class="flex flex-row items-center gap-1 opacity-30 hover:opacity-60 active:opacity-30">
+        <a href="https://github.com" class="flex flex-row items-center gap-1 opacity-30 hover:opacity-60 active:opacity-30">
             <img src="@/assets/icons/solid/github.svg" class="w-4 h-4"/>
             <p class="hidden sm:block">Github</p>
         </a>
