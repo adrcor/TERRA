@@ -14,7 +14,7 @@
         </router-link>
         <router-link to="terms-and-conditions" class="flex flex-row items-center gap-1 opacity-30 hover:opacity-60 active:opacity-30">
             <img src="@/assets/icons/solid/doc.svg" class="w-4 h-4"/>
-            <p class="hidden sm:block">Terms and Condition</p>
+            <p class="hidden sm:block">Terms and Conditions</p>
         </router-link>
     </footer>
 </template>
